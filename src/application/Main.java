@@ -76,8 +76,6 @@ public class Main extends Application {
 			    stage.setScene(gameScene);
 			    stage.setWidth(screenWidth);
 			    stage.setHeight(screenHeight);
-			    stage.setX(0);
-			    stage.setY(0);
 			    stage.setFullScreen(true);
 			});
 			// HIGH SCORES BUTTON
