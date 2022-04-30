@@ -9,7 +9,14 @@ import javafx.stage.StageStyle;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 
@@ -38,16 +45,22 @@ public class Main extends Application {
 			stage.setFullScreenExitHint("");
 			
 			// INITIALIZE SCENES
-			// Title Scene
-			Group titleRoot = new Group();
-			Scene titleScene = new Scene(titleRoot,Color.BLACK);
-			// Game Scene
+			BackgroundSize reducedSize = new BackgroundSize(reducedWidth,reducedHeight,false,false,true,true);
+			// TITLE SCENE
+			Pane titleRoot = new Pane();
+			Scene titleScene = new Scene(titleRoot);
+			titleScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			Image titleImage = new Image(getClass().getResource("/assets/tempBackground.png").toString());
+			BackgroundImage titleBackgroundImage = new BackgroundImage(titleImage,BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER,reducedSize);
+			Background titleBackground = new Background(titleBackgroundImage);
+			titleRoot.setBackground(titleBackground);
+			// GAME SCENE
 			Group gameRoot = new Group();
 			Scene gameScene = new Scene(gameRoot,Color.RED);
-			// Instruction Scene
+			// INSTRUCTION SCENE
 			Group instructionRoot = new Group();
 			Scene instructionScene = new Scene(instructionRoot,Color.GREEN);
-			// High Score Scene
+			// HIGH SCORE SCENE
 			Group scoreRoot = new Group();
 			Scene scoreScene = new Scene(scoreRoot,Color.BLUE);
 			
