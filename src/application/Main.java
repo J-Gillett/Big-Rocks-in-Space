@@ -1,5 +1,6 @@
 package application;
 	
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
@@ -10,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 
 
 public class Main extends Application {
@@ -22,6 +25,10 @@ public class Main extends Application {
 	private final int BUTTON_HEIGHT = (int) (reducedHeight/10);
 	private final int BUTTON_GAP = (int) (BUTTON_HEIGHT/10);
 	private final int BUTTON_MARGIN = (int) (BUTTON_WIDTH/4);
+	private long prev = 0;
+	private long dt = 0;
+	
+	public double heading = 0.0; // TESTING PURPOSES ONLY
 	
 	@Override
 	public void start(Stage stage) {
@@ -150,13 +157,47 @@ public class Main extends Application {
 			
 			////// GAME SCENE //////
 			// Set Style Sheet
-			gameScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());			
+			gameScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			
+			// TESTING OBJECT
+			Polygon triangle = new Polygon();
+			triangle.getPoints().setAll(
+					-10.0,10.0,
+					20.0,0.0,
+					-10.0,-10.0
+					);
+			triangle.setFill(Color.PURPLE);
+			gameRoot.getChildren().add(triangle);
+			
+			
+			
+			////// GAME LOOP //////
+			AnimationTimer gameloop = new AnimationTimer()
+			{
+
+				@Override
+				public void handle(long nano) {
+					// Get time since last frame
+					if (prev != 0) {
+						dt = nano - prev;
+					}
+					prev = nano;
+
+					// FOR TESTING ONLY
+					heading += 5;
+					triangle.setRotate(heading);
+					triangle.setTranslateX(100.0);
+					triangle.setTranslateY(100.0);
+				}
+				
+			};
 			
 
 			
 			////// START THE APPLICATION //////
 			stage.setScene(titleScene);
-			stage.show(); // keep at end of start method, shows stage
+			gameloop.start();
+			stage.show();
 
 		} catch(Exception e) {
 			e.printStackTrace();
