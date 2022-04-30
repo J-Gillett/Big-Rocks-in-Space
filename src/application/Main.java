@@ -28,7 +28,6 @@ public class Main extends Application {
 		try {
 
 			////// STAGE SETUP //////
-			// TODO add icon
 			stage.setTitle("Big Rocks in Space");
 			stage.setWidth(reducedWidth);
 			stage.setHeight(reducedHeight);
@@ -63,8 +62,6 @@ public class Main extends Application {
 
 			
 			////// TITLE SCENE //////
-			// TODO Add background Image
-			// TODO Style Buttons			
 			// Set style sheet
 			titleScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			
@@ -82,7 +79,7 @@ public class Main extends Application {
 			    stage.setFullScreen(true);
 			});
 			// High Scores Button
-			Button scoreButton = new Button("high score");
+			Button scoreButton = new Button("high scores");
 			scoreButton.setPrefWidth(BUTTON_WIDTH);
 			scoreButton.setPrefHeight(BUTTON_HEIGHT);
 			scoreButton.setLayoutX(reducedWidth - BUTTON_WIDTH - BUTTON_MARGIN);
