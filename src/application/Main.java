@@ -64,21 +64,11 @@ public class Main extends Application {
 			Group scoreRoot = new Group();
 			Scene scoreScene = new Scene(scoreRoot,Color.BLUE);
 			
-			// RETURN BUTTON
-			// set up here so it can be added as a child to instructionRoot or scoreRoot as needed
-			Button back = new Button("return");
-			back.setPrefWidth(BUTTON_WIDTH);
-			back.setPrefHeight(BUTTON_HEIGHT);
-			back.setLayoutX(reducedWidth - BUTTON_WIDTH - BUTTON_MARGIN);
-			back.setLayoutY(reducedHeight - BUTTON_HEIGHT - BUTTON_MARGIN);
-			back.setOnAction(actionEvent ->  {
-			    stage.setScene(titleScene);
-			});
 			
-			// TITLE SCENE
+			////// TITLE SCENE //////
 			// TODO Add background Image
 			// TODO Style Buttons
-			// START BUTTON
+			// Start Button
 			Button startButton = new Button("start game");
 			startButton.setDefaultButton(true);
 			startButton.setPrefWidth(BUTTON_WIDTH);
@@ -91,27 +81,25 @@ public class Main extends Application {
 			    stage.setHeight(screenHeight);
 			    stage.setFullScreen(true);
 			});
-			// HIGH SCORES BUTTON
+			// High Scores Button
 			Button scoreButton = new Button("high score");
 			scoreButton.setPrefWidth(BUTTON_WIDTH);
 			scoreButton.setPrefHeight(BUTTON_HEIGHT);
 			scoreButton.setLayoutX(reducedWidth - BUTTON_WIDTH - BUTTON_MARGIN);
 			scoreButton.setLayoutY(reducedHeight - BUTTON_MARGIN - 3*BUTTON_HEIGHT - 2*BUTTON_GAP);
 			scoreButton.setOnAction(actionEvent ->  {
-				scoreRoot.getChildren().addAll(back);
 			    stage.setScene(scoreScene);
 			});
-			// INSTRUCTIONS BUTTON
+			// Instructions Button
 			Button instructionsButton = new Button("instructions");
 			instructionsButton.setPrefWidth(BUTTON_WIDTH);
 			instructionsButton.setPrefHeight(BUTTON_HEIGHT);
 			instructionsButton.setLayoutX(reducedWidth - BUTTON_WIDTH - BUTTON_MARGIN);
 			instructionsButton.setLayoutY(reducedHeight - BUTTON_MARGIN - 2*BUTTON_HEIGHT - 1*BUTTON_GAP);
 			instructionsButton.setOnAction(actionEvent ->  {
-				instructionRoot.getChildren().addAll(back);
 			    stage.setScene(instructionScene);
 			});			
-			// exit game button
+			// Exit Game Button
 			Button exitButton = new Button("exit");
 			exitButton.setCancelButton(true);
 			exitButton.setPrefWidth(BUTTON_WIDTH);
@@ -124,11 +112,33 @@ public class Main extends Application {
 			// adding children to titleRoot
 			titleRoot.getChildren().addAll(startButton, scoreButton, instructionsButton, exitButton);			
 			
-			// HIGH SCORES SCENE
-			
-			// INSTRUCTIONS SCENE
 
-			// GAME SCENE
+			////// HIGH SCORES SCENE //////
+			// Back Button
+			Button backFromHighScores = new Button("return");
+			backFromHighScores.setPrefWidth(BUTTON_WIDTH);
+			backFromHighScores.setPrefHeight(BUTTON_HEIGHT);
+			backFromHighScores.setLayoutX(reducedWidth - BUTTON_WIDTH - BUTTON_MARGIN);
+			backFromHighScores.setLayoutY(reducedHeight - BUTTON_HEIGHT - BUTTON_MARGIN);
+			backFromHighScores.setOnAction(actionEvent ->  {
+			    stage.setScene(titleScene);
+			});
+			scoreRoot.getChildren().addAll(backFromHighScores);
+			
+			
+			////// INSTRUCTIONS SCENE //////
+			Button backFromInstructions = new Button("return");
+			backFromInstructions.setPrefWidth(BUTTON_WIDTH);
+			backFromInstructions.setPrefHeight(BUTTON_HEIGHT);
+			backFromInstructions.setLayoutX(reducedWidth - BUTTON_WIDTH - BUTTON_MARGIN);
+			backFromInstructions.setLayoutY(reducedHeight - BUTTON_HEIGHT - BUTTON_MARGIN);
+			backFromInstructions.setOnAction(actionEvent ->  {
+			    stage.setScene(titleScene);
+			});
+			instructionRoot.getChildren().addAll(backFromInstructions);
+
+
+			////// GAME SCENE //////
 			
 			
 			stage.setScene(titleScene);
