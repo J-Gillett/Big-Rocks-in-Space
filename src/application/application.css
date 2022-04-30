@@ -1,9 +1,24 @@
-.root * {
-    -fx-background-color: black;
+#title {
+	-fx-background-image: url("../assets/tempBackground.png");
+	-fx-background-repeat: stretch;
+	-fx-background-position: center center;
+	-fx-background-size: cover;
 }
 
+#score {
+	-fx-background-color: yellow;
+}
+
+#instructions {
+	-fx-background-color: orange;
+}
+
+#game {
+	-fx-background-color: black;
+}
 
 .button { 
    -fx-background-color: red; 
-   -fx-text-fill: white; 
+   -fx-text-fill: white;
+   -fx-background-radius: 0px;
 }

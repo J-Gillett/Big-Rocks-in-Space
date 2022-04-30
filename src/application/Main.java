@@ -6,18 +6,10 @@ import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 
 public class Main extends Application {
@@ -26,15 +18,16 @@ public class Main extends Application {
 	public int screenHeight = (int) screenBounds.getHeight();
 	public int reducedWidth = (int) (screenWidth*0.8);
 	public int reducedHeight = (int) (screenHeight*0.8);
-	private final int BUTTON_WIDTH = 150;
-	private final int BUTTON_HEIGHT = 60;
-	private final int BUTTON_GAP = 6;
-	private final int BUTTON_MARGIN = 50;
+	private final int BUTTON_WIDTH = (int) (reducedWidth/6);
+	private final int BUTTON_HEIGHT = (int) (reducedHeight/10);
+	private final int BUTTON_GAP = (int) (BUTTON_HEIGHT/10);
+	private final int BUTTON_MARGIN = (int) (BUTTON_WIDTH/4);
 	
 	@Override
 	public void start(Stage stage) {
 		try {
-			// STAGE SETUP
+
+			////// STAGE SETUP //////
 			// TODO add icon
 			stage.setTitle("Big Rocks in Space");
 			stage.setWidth(reducedWidth);
@@ -44,30 +37,37 @@ public class Main extends Application {
 			stage.setFullScreenExitKeyCombination(KeyCombination.valueOf("F11"));
 			stage.setFullScreenExitHint("");
 			
-			// INITIALIZE SCENES
-			BackgroundSize reducedSize = new BackgroundSize(reducedWidth,reducedHeight,false,false,true,true);
-			// TITLE SCENE
+			
+			
+			////// INITIALIZE SCENES //////
+			// Title Scene
 			Pane titleRoot = new Pane();
 			Scene titleScene = new Scene(titleRoot);
-			titleScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			Image titleImage = new Image(getClass().getResource("/assets/tempBackground.png").toString());
-			BackgroundImage titleBackgroundImage = new BackgroundImage(titleImage,BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER,reducedSize);
-			Background titleBackground = new Background(titleBackgroundImage);
-			titleRoot.setBackground(titleBackground);
-			// GAME SCENE
-			Group gameRoot = new Group();
-			Scene gameScene = new Scene(gameRoot,Color.RED);
-			// INSTRUCTION SCENE
-			Group instructionRoot = new Group();
-			Scene instructionScene = new Scene(instructionRoot,Color.GREEN);
-			// HIGH SCORE SCENE
-			Group scoreRoot = new Group();
-			Scene scoreScene = new Scene(scoreRoot,Color.BLUE);
+			titleRoot.setId("title");
+
+			// High Score Scene
+			Pane scoreRoot = new Pane();
+			Scene scoreScene = new Scene(scoreRoot);
+			scoreRoot.setId("score");
+
+			// Instructions Scene
+			Pane instructionRoot = new Pane();
+			Scene instructionScene = new Scene(instructionRoot);
+			instructionRoot.setId("instructions");
+
+			// Game Scene
+			Pane gameRoot = new Pane();
+			Scene gameScene = new Scene(gameRoot);
+			gameRoot.setId("game");
 			
+
 			
 			////// TITLE SCENE //////
 			// TODO Add background Image
-			// TODO Style Buttons
+			// TODO Style Buttons			
+			// Set style sheet
+			titleScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			
 			// Start Button
 			Button startButton = new Button("start game");
 			startButton.setDefaultButton(true);
@@ -113,7 +113,12 @@ public class Main extends Application {
 			titleRoot.getChildren().addAll(startButton, scoreButton, instructionsButton, exitButton);			
 			
 
+			
+			
 			////// HIGH SCORES SCENE //////
+			// Set style sheet
+			scoreScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
 			// Back Button
 			Button backFromHighScores = new Button("return");
 			backFromHighScores.setPrefWidth(BUTTON_WIDTH);
@@ -126,7 +131,13 @@ public class Main extends Application {
 			scoreRoot.getChildren().addAll(backFromHighScores);
 			
 			
+			
+			
 			////// INSTRUCTIONS SCENE //////
+			// Set style sheet
+			instructionScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			
+			// Back Button
 			Button backFromInstructions = new Button("return");
 			backFromInstructions.setPrefWidth(BUTTON_WIDTH);
 			backFromInstructions.setPrefHeight(BUTTON_HEIGHT);
@@ -138,11 +149,18 @@ public class Main extends Application {
 			instructionRoot.getChildren().addAll(backFromInstructions);
 
 
+			
+			
 			////// GAME SCENE //////
+			// Set Style Sheet
+			gameScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());			
 			
+
 			
+			////// START THE APPLICATION //////
 			stage.setScene(titleScene);
 			stage.show(); // keep at end of start method, shows stage
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
