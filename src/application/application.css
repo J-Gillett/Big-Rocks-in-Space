@@ -1,24 +1,43 @@
 #title {
 	-fx-background-image: url("../assets/tempBackground.png");
+	background-image: url("../assets/tempBackground.png");
 	-fx-background-repeat: stretch;
+	background-repeat: stretch;
 	-fx-background-position: center center;
+	background-position: center center;
 	-fx-background-size: cover;
+	background-size: cover;
 }
 
 #score {
-	-fx-background-color: yellow;
+	-fx-background-color: #000000;
+	background-color: #000000;
 }
 
 #instructions {
-	-fx-background-color: orange;
+	-fx-background-color: #000000;
+	background-color: #000000;
 }
 
 #game {
-	-fx-background-color: black;
+	-fx-background-color: #000000;
+	background-color: #000000;
 }
 
 .button { 
-   -fx-background-color: red; 
-   -fx-text-fill: white;
-   -fx-background-radius: 0px;
+   -fx-background-radius: 0em;
+   -fx-background-color: radial-gradient(focus-distance 0% , center 50% 50% , radius 100% , #E0E000, #F00000);
+   background-color: radial-gradient(focus-distance 0% , center 50% 50% , radius 100% , #E0E000, #F00000);
+   -fx-text-fill: #F0F0F0;
+   -fx-font-size: 1.8em;
+   font-size: 1.8em;
+   -fx-font-weight: 800;
+   font-weight: 800;
+}
+
+
+.button:hover { 
+   -fx-background-color: radial-gradient(focus-distance 0% , center 50% 50% , radius 100% , #FFFF00, #FF0000);
+   background-color: radial-gradient(focus-distance 0% , center 50% 50% , radius 100% , #FFFF00, #FF0000);
+   -fx-text-fill: #FFFFFF;
 }
