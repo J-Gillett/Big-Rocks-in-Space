@@ -7,6 +7,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCombination;
@@ -152,6 +153,7 @@ public class Main extends Application {
 			// TESTING OBJECT
 			MovingPolygon testObject = new MovingPolygon();
 			gameRoot.getChildren().add(testObject);
+			gameScene.setCursor(Cursor.NONE);
 
 			
 			
