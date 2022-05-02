@@ -11,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 
 public class Main extends Application {
@@ -152,12 +151,6 @@ public class Main extends Application {
 			////// GAME SCENE //////			
 			// TESTING OBJECT
 			MovingPolygon testObject = new MovingPolygon();
-			testObject.getPoints().setAll(
-					-10.0,10.0,
-					20.0,0.0,
-					-10.0,-10.0
-					);
-			testObject.setFill(Color.RED);
 			gameRoot.getChildren().add(testObject);
 
 			
