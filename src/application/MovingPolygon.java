@@ -19,7 +19,7 @@ public class MovingPolygon extends Polygon {
 		this.velocity = new Point2D(50.0,0.0);
 		this.acceleration = new Point2D(0.0,0.0);
 		this.heading = 0.0;
-		this.angularMomentum = 0.0;
+		this.angularMomentum = 360.0;
 		this.proximityRadius = 0.0;
 		this.setFill(Color.RED);
 	}
@@ -33,12 +33,14 @@ public class MovingPolygon extends Polygon {
 				);
 	}
 	
-	public void update(double dt) {
-		this.heading = this.heading + this.angularMomentum*dt; // change heading based on angular momentum
+	public void update(double deltaTime) {
+		this.heading = this.heading + this.angularMomentum*deltaTime; // change heading based on angular momentum
 		this.heading = this.heading %360; // restrict heading from 0 to 360 degrees
-		// TODO change acceleration based on heading
-		// TODO change velocity based on acceleration
-		this.position = this.position.add(this.velocity.multiply(dt)); // TODO take into account acceleration
+		// TODO change acceleration based on heading... extend point2D
+		Point2D deltaPos = new Point2D(this.velocity.getX(),this.velocity.getY()); // initialize change in position
+		this.velocity = this.velocity.add(this.acceleration.multiply(deltaTime)); // change velocity based on acceleration
+		deltaPos = deltaPos.add(this.velocity).multiply(0.5).multiply(deltaTime); // change in position = (final velocity + initial velocity)/2 * delta time
+		this.position = this.position.add(deltaPos);
 		this.setTranslateX(this.position.getX());
 		this.setTranslateY(this.position.getY());
 		this.setRotate(this.heading);

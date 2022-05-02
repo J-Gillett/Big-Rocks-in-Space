@@ -160,20 +160,20 @@ public class Main extends Application {
 			////// GAME LOOP //////
 			AnimationTimer gameloop = new AnimationTimer()
 			{
-				private long prev = 0;
-				private double dt;
+				private long prevFrame = 0;
+				private double deltaTime;
 
 				@Override
 				public void handle(long nano) {
 					// Get time since last frame
-					if (prev != 0) {
-						dt = (nano - prev)/Math.pow(10, 9); // delta time = current timestamp - previous timestamp / a billion seconds
+					if (prevFrame != 0) {
+						deltaTime = (nano - prevFrame)/Math.pow(10, 9); // delta time = current timestamp - previous timestamp / a billion seconds
 					}
-					prev = nano; // set previous frame timestamp to current
+					prevFrame = nano; // set previous frame timestamp to current
 					
 					////// UPDATES //////
 					// FOR TESTING ONLY
-					testObject.update(dt);
+					testObject.update(deltaTime);
 					
 					////// COLLISIONS //////
 					// TODO Add Collisions
