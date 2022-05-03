@@ -13,18 +13,20 @@ public class MovingPolygon extends Polygon {
 	
 	public MovingPolygon() {
 		// TESTING CRAP
-		this.setCoordinates();
+		this.setPoints();
 		this.position = new Vector2D(700.0,500.0);
 		this.velocity = new Vector2D(0.0,0.0);
-		this.acceleration = new Vector2D(200.0,0.0);
+		this.acceleration = new Vector2D(10.0,0.0);
 		this.heading = 0.0;
-		this.angularSpeed = 90.0;
+		this.angularSpeed = 0.0;
 		this.proximityRadius = 0.0;
-		this.setFill(Color.RED);
+		this.setFill(Color.WHITE);
+		this.setStroke(Color.YELLOW);
+		this.setStrokeWidth(2.0);
 	}
 	
 	// COORDINATES FOR TESTING PURPOSES ONLY
-	protected void setCoordinates() {
+	protected void setPoints() {
 		this.getPoints().setAll(
 				-10.0,10.0,
 				20.0,0.0,
@@ -39,7 +41,7 @@ public class MovingPolygon extends Polygon {
 		Vector2D deltaPos = new Vector2D(this.velocity.getX(),this.velocity.getY()); // initialize change in position
 		this.velocity = this.velocity.add(this.acceleration.multiply(deltaTime)); // change velocity based on acceleration
 		deltaPos = deltaPos.add(this.velocity).multiply(0.5).multiply(deltaTime); // change in position = (final velocity + initial velocity)/2 * delta time
-		this.position = this.position.add(deltaPos);
+		this.position = this.position.add(deltaPos); // update position
 		// TODO add screen wrap
 		this.setTranslateX(this.position.getX()); // set translation based on position
 		this.setTranslateY(this.position.getY()); // set translation based on position

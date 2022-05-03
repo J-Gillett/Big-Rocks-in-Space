@@ -16,9 +16,10 @@ public class Vector2D extends Point2D {
 	}
 		
 	public Vector2D multiply(double factor) {
+		Point2D vector = super.multiply(factor);
 		return new Vector2D(
-				super.multiply(factor).getX(),
-				super.multiply(factor).getY()
+				vector.getX(),
+				vector.multiply(factor).getY()
 				);
 	}
 	
