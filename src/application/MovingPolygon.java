@@ -14,10 +14,10 @@ public class MovingPolygon extends Polygon {
 	public MovingPolygon() {
 		// TESTING CRAP
 		this.setPoints();
-		this.position = new Vector2D(700.0,500.0);
+		this.position = new Vector2D(Main.screenWidth/2,Main.screenHeight/2-50.0);
 		this.velocity = new Vector2D(0.0,0.0);
-		this.acceleration = new Vector2D(10.0,0.0);
-		this.heading = 0.0;
+		this.acceleration = new Vector2D(100.0,0.0);
+		this.heading = 270.0;
 		this.angularSpeed = 0.0;
 		this.proximityRadius = 0.0;
 		this.setFill(Color.WHITE);
@@ -35,14 +35,28 @@ public class MovingPolygon extends Polygon {
 	}
 	
 	public void update(double deltaTime) {
+		// Updating position
 		this.heading = this.heading + this.angularSpeed*deltaTime; // change heading based on angular speed
 		this.heading = this.heading %360; // restrict heading from 0 to 360 degrees
 		this.acceleration = this.acceleration.atAngle(this.heading);
-		Vector2D deltaPos = new Vector2D(this.velocity.getX(),this.velocity.getY()); // initialize change in position
+		Vector2D deltaPos = new Vector2D(this.velocity.getX(),this.velocity.getY()).multiply(deltaTime); // displacement = initial velocity * time + ...
 		this.velocity = this.velocity.add(this.acceleration.multiply(deltaTime)); // change velocity based on acceleration
-		deltaPos = deltaPos.add(this.velocity).multiply(0.5).multiply(deltaTime); // change in position = (final velocity + initial velocity)/2 * delta time
+		deltaPos = deltaPos.add(this.acceleration.multiply(0.5).multiply(deltaTime*deltaTime)); // displacement = ... + 0.5 acceleration * time^2
 		this.position = this.position.add(deltaPos); // update position
-		// TODO add screen wrap
+		// Screen Wrapping
+		if (this.position.getX() > Main.screenWidth) {
+			this.position = new Vector2D(this.position.getX()-Main.screenWidth,this.position.getY());
+		}
+		if (this.position.getX() < 0) {
+			this.position = new Vector2D(this.position.getX()+Main.screenWidth,this.position.getY());
+		}
+		if (this.position.getY() > Main.screenHeight) {
+			this.position = new Vector2D(this.position.getX(),this.position.getY()-Main.screenHeight);
+		}
+		if (this.position.getY() < 0) {
+			this.position = new Vector2D(this.position.getX(),this.position.getY()+Main.screenHeight);
+		}
+		// Setting rendering position to position
 		this.setTranslateX(this.position.getX()); // set translation based on position
 		this.setTranslateY(this.position.getY()); // set translation based on position
 		this.setRotate(this.heading); // set rotation based on heading

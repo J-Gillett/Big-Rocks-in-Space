@@ -19,7 +19,7 @@ public class Vector2D extends Point2D {
 		Point2D vector = super.multiply(factor);
 		return new Vector2D(
 				vector.getX(),
-				vector.multiply(factor).getY()
+				vector.getY()
 				);
 	}
 	

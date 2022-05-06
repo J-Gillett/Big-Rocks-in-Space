@@ -16,9 +16,9 @@ import javafx.scene.layout.Pane;
 
 public class Main extends Application {
 	// Getting Screen Size
-	public Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-	public int screenWidth = (int) screenBounds.getWidth();
-	public int screenHeight = (int) screenBounds.getHeight();
+	public static Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+	public static int screenWidth = (int) screenBounds.getWidth();
+	public static int screenHeight = (int) screenBounds.getHeight();
 	
 	@Override
 	public void start(Stage stage) {
