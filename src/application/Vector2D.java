@@ -24,68 +24,79 @@ public class Vector2D {
 		this.y = vector.getY();
 	}
 	
-	public void add(double x, double y) {
+	public Vector2D add(double x, double y) {
 		this.x += x;
 		this.y += y;
+		return this;
 	}
 
-	public void add(Point2D point) {
+	public Vector2D add(Point2D point) {
 		this.x += point.getX();
 		this.y += point.getY();
+		return this;
 	}
 
-	public void add(Vector2D vector) {
+	public Vector2D add(Vector2D vector) {
 		this.x += vector.getX();
 		this.y += vector.getY();
+		return this;
 	}
 
-	public void subtract(double x, double y) {
+	public Vector2D subtract(double x, double y) {
 		this.x -= x;
 		this.y -= y;
+		return this;
 	}
 	
-	public void subtract(Point2D point) {
+	public Vector2D subtract(Point2D point) {
 		this.x -= point.getX();
 		this.y -= point.getY();
+		return this;
 	}
 	
-	public void subtract(Vector2D vector) {
+	public Vector2D subtract(Vector2D vector) {
 		this.x -= vector.getX();
 		this.y -= vector.getY();
+		return this;
 	}
 	
-	public void mulitply(double factor) {
+	public Vector2D multiply(double factor) {
 		this.x *= factor;
 		this.y *= factor;
+		return this;
 	}
 	
-	public void divide(double factor) {
+	public Vector2D divide(double factor) {
 		this.x /= factor;
 		this.y /= factor;
+		return this;
 	}
 
 	public double getMagnitude() {
 		return Math.sqrt( Math.pow(this.x, 2) + Math.pow(this.y, 2) );
 	}
 
-	public void normalize() {
+	public Vector2D normalize() {
 		this.divide(this.getMagnitude());
+		return this;
 	}
 	
-	public void setMagnitude(double length) {
+	public Vector2D setMagnitude(double length) {
 		this.normalize();
-		this.mulitply(length);
+		this.multiply(length);
+		return this;
 	}
 	
 	public double getAngle() {
 		return Math.atan(this.y/this.x);
 	}
 	
-	public void setAngle(double theta) {
+	public Vector2D setAngle(double theta) {
 		theta = Math.toRadians(theta % 360);
 		double magnitude = this.getMagnitude();
 		this.x = Math.cos(theta) * magnitude;
 		this.y = Math.sin(theta) * magnitude;
+		return this;
 	}
 
 	public double getX() {
