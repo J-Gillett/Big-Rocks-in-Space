@@ -3,7 +3,10 @@ package application;
 import javafx.geometry.Point2D;
 
 /* A mutable version of Point2D with some minor additional functionality.
- * Don't have equivalent methods to angle() dotProduct() midpoint() or crossProduct() */
+ * Don't have equivalent methods to angle() dotProduct() midpoint() or crossProduct()
+ * TODO Add static methods for all operations
+ * TODO Add static methods for distance(), angleBetween() and dotProduct()
+ * TODO Consider adding lerp() method */
 
 public class Vector2D {
 	private double x;
