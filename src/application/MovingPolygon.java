@@ -27,11 +27,7 @@ public class MovingPolygon extends Polygon {
 	
 	// COORDINATES FOR TESTING PURPOSES ONLY
 	protected void setPoints() {
-		this.getPoints().setAll(
-				-10.0,10.0,
-				20.0,0.0,
-				-10.0,-10.0
-				);
+		this.getPoints().setAll(Outline.testTriangle());
 	}
 	
 	public void update(double deltaTime) {
