@@ -167,9 +167,9 @@ public class Main extends Application {
 				public void handle(long nano) {
 					// Get time since last frame
 					if (prevFrame != 0) {
-						deltaTime = (nano - prevFrame)/Math.pow(10, 9); // delta time = current timestamp - previous timestamp / a billion seconds
+						deltaTime = (nano - prevFrame)/Math.pow(10, 9); // delta time = current time-stamp - previous time-stamp / a billion seconds
 					}
-					prevFrame = nano; // set previous frame timestamp to current
+					prevFrame = nano; // set previous frame time-stamp to current
 					
 					////// UPDATES //////
 					// FOR TESTING ONLY
