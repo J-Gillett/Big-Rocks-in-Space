@@ -4,9 +4,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 public class MovingPolygon extends Polygon {
-	protected ExtendedPoint2D position;
-	protected ExtendedPoint2D velocity;
-	protected ExtendedPoint2D acceleration;
+	protected Vector2D position;
+	protected Vector2D velocity;
+	protected Vector2D acceleration;
 	protected double heading;
 	protected double angularSpeed;
 	protected double proximityRadius;
@@ -14,9 +14,9 @@ public class MovingPolygon extends Polygon {
 	public MovingPolygon() {
 		// TESTING CRAP
 		this.setPoints();
-		this.position = new ExtendedPoint2D(Main.screenWidth/2,Main.screenHeight/2-50.0);
-		this.velocity = new ExtendedPoint2D(0.0,0.0);
-		this.acceleration = new ExtendedPoint2D(100.0,0.0);
+		this.position = new Vector2D(Main.screenWidth/2,Main.screenHeight/2-50.0);
+		this.velocity = new Vector2D(0.0,0.0);
+		this.acceleration = new Vector2D(100.0,0.0);
 		this.heading = 270.0;
 		this.angularSpeed = 0.0;
 		this.proximityRadius = 0.0;
@@ -38,23 +38,23 @@ public class MovingPolygon extends Polygon {
 		// Updating position
 		this.heading = this.heading + this.angularSpeed*deltaTime; // change heading based on angular speed
 		this.heading = this.heading %360; // restrict heading from 0 to 360 degrees
-		this.acceleration = this.acceleration.atAngle(this.heading);
-		ExtendedPoint2D deltaPos = new ExtendedPoint2D(this.velocity.getX(),this.velocity.getY()).multiply(deltaTime); // displacement = initial velocity * time + ...
-		this.velocity = this.velocity.add(this.acceleration.multiply(deltaTime)); // change velocity based on acceleration
-		deltaPos = deltaPos.add(this.acceleration.multiply(0.5).multiply(deltaTime*deltaTime)); // displacement = ... + 0.5 acceleration * time^2
-		this.position = this.position.add(deltaPos); // update position
+		this.acceleration = this.acceleration.setAngle(this.heading);
+		Vector2D deltaPos = Vector2D.copy(this.velocity).multiply(deltaTime); // displacement = initial velocity * time + ...
+		this.velocity.add(this.acceleration.copy().multiply(deltaTime)); // final velocity is initial velocity + acceleration * time
+		deltaPos = deltaPos.add(this.acceleration.copy().multiply(deltaTime).multiply(0.5)); // displacement = ... + 0.5 acceleration * time
+		this.position.add(deltaPos); // update position
 		// Screen Wrapping
 		if (this.position.getX() > Main.screenWidth) {
-			this.position = new ExtendedPoint2D(this.position.getX()-Main.screenWidth,this.position.getY());
+			this.position.setX(this.position.getX() - Main.screenWidth);
 		}
 		if (this.position.getX() < 0) {
-			this.position = new ExtendedPoint2D(this.position.getX()+Main.screenWidth,this.position.getY());
+			this.position.setX(this.position.getX() + Main.screenWidth);
 		}
 		if (this.position.getY() > Main.screenHeight) {
-			this.position = new ExtendedPoint2D(this.position.getX(),this.position.getY()-Main.screenHeight);
+			this.position.setY(this.position.getY()-Main.screenHeight);
 		}
 		if (this.position.getY() < 0) {
-			this.position = new ExtendedPoint2D(this.position.getX(),this.position.getY()+Main.screenHeight);
+			this.position.setY(this.position.getY()+Main.screenHeight);
 		}
 		// Setting rendering position to position
 		this.setTranslateX(this.position.getX()); // set translation based on position
