@@ -24,6 +24,27 @@ public class Vector2D {
 		this.y = vector.getY();
 	}
 	
+	public Vector2D() {
+		this.x = 1.0;
+		this.y = 0.0;
+	}
+	
+	public static Vector2D newPolar(double magnitude, double direction) {
+		return new Vector2D().setMagnitude(magnitude).setAngle(direction);
+	}
+	
+	public static Vector2D copy(Vector2D vector) {
+		return new Vector2D(vector);
+	}
+	
+	public static Vector2D copy(Point2D point) {
+		return new Vector2D(point);
+	}
+	
+	public Vector2D copy() {
+		return Vector2D.copy(this);
+	}
+	
 	public Vector2D add(double x, double y) {
 		this.x += x;
 		this.y += y;
@@ -40,6 +61,22 @@ public class Vector2D {
 		this.x += vector.getX();
 		this.y += vector.getY();
 		return this;
+	}
+	
+	public static Vector2D add(Vector2D vector1, Vector2D vector2) {
+		return vector1.copy().add(vector2);
+	}
+	
+	public static Vector2D add(Vector2D vector, Point2D point) {
+		return vector.copy().add(point);
+	}
+	
+	public static Vector2D add(Point2D point, Vector2D vector) {
+		return vector.copy().add(point);
+	}
+	
+	public static Vector2D add(Point2D point1, Point2D point2) {
+		return new Vector2D(point1).add(point2);
 	}
 
 	public Vector2D subtract(double x, double y) {
@@ -77,8 +114,13 @@ public class Vector2D {
 	}
 
 	public Vector2D normalize() {
-		this.divide(this.getMagnitude());
-		return this;
+		if (this.getMagnitude() != 0) {
+			this.divide(this.getMagnitude());
+			return this;			
+		} else {
+			this.setX(1.0);
+			return this;
+		}
 	}
 	
 	public Vector2D setMagnitude(double length) {
@@ -91,12 +133,17 @@ public class Vector2D {
 		return Math.atan(this.y/this.x);
 	}
 	
-	public Vector2D setAngle(double theta) {
-		theta = Math.toRadians(theta % 360);
+	public Vector2D setAngle(double direction) {
+		direction = Math.toRadians(direction % 360);
 		double magnitude = this.getMagnitude();
-		this.x = Math.cos(theta) * magnitude;
-		this.y = Math.sin(theta) * magnitude;
+		this.x = Math.cos(direction) * magnitude;
+		this.y = Math.sin(direction) * magnitude;
 		return this;
+	}
+	
+	public Vector2D rotate(double angle) {
+		angle += this.getAngle();
+		return this.setAngle(angle);
 	}
 
 	public double getX() {
