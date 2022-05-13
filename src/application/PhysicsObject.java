@@ -1,13 +1,15 @@
 package application;
 
+import java.util.LinkedList;
+
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
-public class PhysicsObject extends Group {
-	//TODO add Parts array
+public class PhysicsObject extends Group implements Collider {
+	protected LinkedList<Shape> parts;
 	protected Shape hitbox;
 	protected Vector2D position;
 	protected Vector2D velocity;
@@ -28,19 +30,10 @@ public class PhysicsObject extends Group {
 	}
 	
 	private void addParts() {
-		Polygon body = new Polygon();
-		body.getPoints().setAll(Outline.testTriangle());
-		body.setFill(Color.WHITE);
-		body.setStroke(Color.YELLOW);
-		body.setStrokeWidth(2.0);
-		Circle test = new Circle(5.0);
-		test.setTranslateX(10.0);
-		test.setTranslateY(10.0);
-		test.setFill(Color.WHITE);
-		test.setStroke(Color.PINK);
-		test.setStrokeWidth(2.0);
-		// TODO add parts to parts array
-		this.getChildren().addAll(body,test);
+		this.parts = BitsBox.playerShip();
+		for (int i=0; i<this.parts.size(); i++) {
+			this.getChildren().add(this.parts.get(i));
+		}
 	}
 	
 	private void setHitbox() {
