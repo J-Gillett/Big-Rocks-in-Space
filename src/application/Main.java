@@ -179,6 +179,9 @@ public class Main extends Application {
 					////// COLLISIONS //////
 					// TODO Add Collisions
 					
+					////// RENDERING //////
+					testObject.render();
+					
 					////// GAME STATE ///////
 					// TODO Check end of level
 					// TODO Check if game over

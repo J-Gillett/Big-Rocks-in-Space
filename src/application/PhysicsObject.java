@@ -50,7 +50,6 @@ public class PhysicsObject extends Group {
 	public void update(double deltaTime) {
 		this.move(deltaTime);
 		this.screenWrap();
-		this.render();
 	}
 	
 	private void move(double deltaTime) {
@@ -79,7 +78,7 @@ public class PhysicsObject extends Group {
 		}
 	}
 	
-	private void render() {
+	public void render() {
 		this.setTranslateX(this.position.getX()); // set translation based on position
 		this.setTranslateY(this.position.getY()); // set translation based on position
 		this.setRotate(this.heading); // set rotation based on heading
