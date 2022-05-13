@@ -7,6 +7,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
 public class PhysicsObject extends Group {
+	//TODO add Parts array
 	protected Shape hitbox;
 	protected Vector2D position;
 	protected Vector2D velocity;
@@ -17,6 +18,7 @@ public class PhysicsObject extends Group {
 	
 	public PhysicsObject() {
 		this.addParts();
+		this.setHitbox();
 		this.position = new Vector2D(Main.screenWidth/2,Main.screenHeight/2-50.0);
 		this.velocity = new Vector2D(0.0,0.0);
 		this.acceleration = new Vector2D(100.0,0.0);
@@ -31,11 +33,18 @@ public class PhysicsObject extends Group {
 		body.setFill(Color.WHITE);
 		body.setStroke(Color.YELLOW);
 		body.setStrokeWidth(2.0);
-		Circle test = new Circle(0.0, 10.0, 5.0);
+		Circle test = new Circle(5.0);
+		test.setTranslateX(10.0);
+		test.setTranslateY(10.0);
 		test.setFill(Color.WHITE);
 		test.setStroke(Color.PINK);
 		test.setStrokeWidth(2.0);
+		// TODO add parts to parts array
 		this.getChildren().addAll(body,test);
+	}
+	
+	private void setHitbox() {
+		// TODO loop through parts array setting the hitbox as a union of the parts
 	}
 	
 	public void update(double deltaTime) {
