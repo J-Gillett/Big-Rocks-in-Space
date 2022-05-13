@@ -13,7 +13,7 @@ public class MovingPolygon extends Polygon {
 	
 	public MovingPolygon() {
 		// TESTING CRAP
-		this.setPoints();
+		this.getPoints().setAll(Outline.testTriangle());
 		this.position = new Vector2D(Main.screenWidth/2,Main.screenHeight/2-50.0);
 		this.velocity = new Vector2D(0.0,0.0);
 		this.acceleration = new Vector2D(100.0,0.0);
@@ -23,11 +23,6 @@ public class MovingPolygon extends Polygon {
 		this.setFill(Color.WHITE);
 		this.setStroke(Color.YELLOW);
 		this.setStrokeWidth(2.0);
-	}
-	
-	// COORDINATES FOR TESTING PURPOSES ONLY
-	protected void setPoints() {
-		this.getPoints().setAll(Outline.testTriangle());
 	}
 	
 	public void update(double deltaTime) {
