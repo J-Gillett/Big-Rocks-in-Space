@@ -20,10 +20,10 @@ public class PhysicsObject extends Group {
 		this.addParts();
 		this.setHitbox();
 		this.position = new Vector2D(Main.screenWidth/2,Main.screenHeight/2-50.0);
-		this.velocity = new Vector2D(0.0,0.0);
+		this.velocity = new Vector2D(-70.0,0.0);
 		this.acceleration = new Vector2D(100.0,0.0);
 		this.heading = 270.0;
-		this.angularSpeed = 0.0;
+		this.angularSpeed = 90.0;
 		this.proximityRadius = 0.0;
 	}
 	
@@ -48,7 +48,12 @@ public class PhysicsObject extends Group {
 	}
 	
 	public void update(double deltaTime) {
-		// Updating position
+		this.move(deltaTime);
+		this.screenWrap();
+		this.render();
+	}
+	
+	private void move(double deltaTime) {
 		this.heading = this.heading + this.angularSpeed*deltaTime; // change heading based on angular speed
 		this.heading = this.heading %360; // restrict heading from 0 to 360 degrees
 		this.acceleration = this.acceleration.setAngle(this.heading);
@@ -56,7 +61,10 @@ public class PhysicsObject extends Group {
 		this.velocity.add(this.acceleration.copy().multiply(deltaTime)); // final velocity is initial velocity + acceleration * time
 		deltaPos = deltaPos.add(this.acceleration.copy().multiply(deltaTime).multiply(0.5)); // displacement = ... + 0.5 acceleration * time
 		this.position.add(deltaPos); // update position
-		// Screen Wrapping
+		
+	}
+	
+	private void screenWrap() {
 		if (this.position.getX() > Main.screenWidth) {
 			this.position.setX(this.position.getX() - Main.screenWidth);
 		}
@@ -69,7 +77,9 @@ public class PhysicsObject extends Group {
 		if (this.position.getY() < 0) {
 			this.position.setY(this.position.getY()+Main.screenHeight);
 		}
-		// Setting rendering position to position
+	}
+	
+	private void render() {
 		this.setTranslateX(this.position.getX()); // set translation based on position
 		this.setTranslateY(this.position.getY()); // set translation based on position
 		this.setRotate(this.heading); // set rotation based on heading
