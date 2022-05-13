@@ -2,6 +2,7 @@ package application;
 
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
@@ -30,7 +31,11 @@ public class PhysicsObject extends Group {
 		body.setFill(Color.WHITE);
 		body.setStroke(Color.YELLOW);
 		body.setStrokeWidth(2.0);
-		this.getChildren().addAll(body);
+		Circle test = new Circle(0.0, 10.0, 5.0);
+		test.setFill(Color.WHITE);
+		test.setStroke(Color.PINK);
+		test.setStrokeWidth(2.0);
+		this.getChildren().addAll(body,test);
 	}
 	
 	public void update(double deltaTime) {
