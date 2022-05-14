@@ -23,7 +23,7 @@ public class PhysicsObject extends Group implements Collider {
 		this.position = new Vector2D(Main.screenWidth/2,Main.screenHeight/2-50.0);
 		this.velocity = new Vector2D(0.0,0.0);
 		this.heading = 270.0;
-		this.angularSpeed = -90.0;
+		this.angularSpeed = 90.0;
 		this.proximityRadius = 0.0;
 	}
 	
