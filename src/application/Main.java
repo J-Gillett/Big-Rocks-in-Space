@@ -151,7 +151,8 @@ public class Main extends Application {
 			
 			////// GAME SCENE //////			
 			// TESTING OBJECT
-			MovingPolygon testObject = new MovingPolygon();
+//			MovingPolygon testObject = new MovingPolygon();
+			Ship testObject = new Ship();
 			gameRoot.getChildren().add(testObject);
 			gameScene.setCursor(Cursor.NONE);
 
@@ -177,6 +178,9 @@ public class Main extends Application {
 					
 					////// COLLISIONS //////
 					// TODO Add Collisions
+					
+					////// RENDERING //////
+					testObject.render();
 					
 					////// GAME STATE ///////
 					// TODO Check end of level

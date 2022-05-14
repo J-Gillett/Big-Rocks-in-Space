@@ -1,49 +1,55 @@
 package application;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
+import java.util.LinkedList;
 
-public class MovingPolygon extends Polygon {
+import javafx.scene.Group;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Shape;
+
+public class PhysicsObject extends Group implements Collider {
+	protected LinkedList<Shape> parts;
+	protected Shape hitbox;
 	protected Vector2D position;
 	protected Vector2D velocity;
-	protected Vector2D acceleration;
 	protected double heading;
 	protected double angularSpeed;
 	protected double proximityRadius;
 	
-	public MovingPolygon() {
-		// TESTING CRAP
-		this.setPoints();
+	public PhysicsObject() {
+		this.addParts();
+		this.setHitbox();
 		this.position = new Vector2D(Main.screenWidth/2,Main.screenHeight/2-50.0);
 		this.velocity = new Vector2D(0.0,0.0);
-		this.acceleration = new Vector2D(100.0,0.0);
 		this.heading = 270.0;
-		this.angularSpeed = 0.0;
+		this.angularSpeed = 90.0;
 		this.proximityRadius = 0.0;
-		this.setFill(Color.WHITE);
-		this.setStroke(Color.YELLOW);
-		this.setStrokeWidth(2.0);
 	}
 	
-	// COORDINATES FOR TESTING PURPOSES ONLY
-	protected void setPoints() {
-		this.getPoints().setAll(
-				-10.0,10.0,
-				20.0,0.0,
-				-10.0,-10.0
-				);
+	protected void addParts() {
+		this.parts = BitsBox.testShape();
+		for (int i=0; i<this.parts.size(); i++) {
+			this.getChildren().add(this.parts.get(i));
+		}
+	}
+	
+	protected void setHitbox() {
+		// TODO loop through parts array setting the hitbox as a union of the parts
 	}
 	
 	public void update(double deltaTime) {
-		// Updating position
+		this.move(deltaTime);
+		this.screenWrap();
+	}
+	
+	protected void move(double deltaTime) {
 		this.heading = this.heading + this.angularSpeed*deltaTime; // change heading based on angular speed
 		this.heading = this.heading %360; // restrict heading from 0 to 360 degrees
-		this.acceleration = this.acceleration.setAngle(this.heading);
-		Vector2D deltaPos = Vector2D.copy(this.velocity).multiply(deltaTime); // displacement = initial velocity * time + ...
-		this.velocity.add(this.acceleration.copy().multiply(deltaTime)); // final velocity is initial velocity + acceleration * time
-		deltaPos = deltaPos.add(this.acceleration.copy().multiply(deltaTime).multiply(0.5)); // displacement = ... + 0.5 acceleration * time
-		this.position.add(deltaPos); // update position
-		// Screen Wrapping
+		this.position.add(this.velocity.copy().multiply(deltaTime));
+	}
+	
+	protected void screenWrap() {
 		if (this.position.getX() > Main.screenWidth) {
 			this.position.setX(this.position.getX() - Main.screenWidth);
 		}
@@ -56,7 +62,9 @@ public class MovingPolygon extends Polygon {
 		if (this.position.getY() < 0) {
 			this.position.setY(this.position.getY()+Main.screenHeight);
 		}
-		// Setting rendering position to position
+	}
+	
+	public void render() {
 		this.setTranslateX(this.position.getX()); // set translation based on position
 		this.setTranslateY(this.position.getY()); // set translation based on position
 		this.setRotate(this.heading); // set rotation based on heading
