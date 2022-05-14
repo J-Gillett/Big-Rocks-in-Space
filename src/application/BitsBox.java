@@ -10,7 +10,7 @@ import javafx.scene.shape.Shape;
 
 public class BitsBox {
 
-	public static LinkedList<Shape> playerShip() {
+	public static LinkedList<Shape> testShape() {
 		LinkedList<Shape> bits = new LinkedList<>();
 
 		Polygon gun = new Polygon();
@@ -41,11 +41,4 @@ public class BitsBox {
 		return bits;
 	}
 	
-	public static Double[] testTriangle() {
-		return new Double[] {
-				-10.0,10.0,
-				20.0,0.0,
-				-10.0,-10.0
-		};
-	}
 }

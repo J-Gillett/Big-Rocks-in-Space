@@ -152,7 +152,7 @@ public class Main extends Application {
 			////// GAME SCENE //////			
 			// TESTING OBJECT
 //			MovingPolygon testObject = new MovingPolygon();
-			PhysicsObject testObject = new PhysicsObject();
+			Ship testObject = new Ship();
 			gameRoot.getChildren().add(testObject);
 			gameScene.setCursor(Cursor.NONE);
 
