@@ -3,9 +3,6 @@ package application;
 import java.util.LinkedList;
 
 import javafx.scene.Group;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
 public class PhysicsObject extends Group implements Collider {

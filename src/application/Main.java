@@ -1,5 +1,7 @@
 package application;
 	
+import java.util.LinkedList;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -8,6 +10,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCombination;
@@ -149,10 +152,11 @@ public class Main extends Application {
 
 			
 			
-			////// GAME SCENE //////			
+			////// GAME SCENE //////
+			LinkedList<PhysicsObject> gameObjects = new LinkedList<>();
 			// TESTING OBJECT
-//			MovingPolygon testObject = new MovingPolygon();
 			Ship testObject = new Ship();
+			gameObjects.add(testObject);
 			gameRoot.getChildren().add(testObject);
 			gameScene.setCursor(Cursor.NONE);
 
@@ -173,15 +177,18 @@ public class Main extends Application {
 					prevFrame = nano; // set previous frame time-stamp to current
 					
 					////// UPDATES //////
-					// FOR TESTING ONLY
-					testObject.update(deltaTime);
+					for (int i=0; i < gameObjects.size(); i++) {
+						gameObjects.get(i).update(deltaTime);
+					}
 					
 					////// COLLISIONS //////
 					// TODO Add Collisions
 					
 					////// RENDERING //////
-					testObject.render();
-					
+					for (int i=0; i < gameObjects.size(); i++) {
+						gameObjects.get(i).render();
+					}
+
 					////// GAME STATE ///////
 					// TODO Check end of level
 					// TODO Check if game over
