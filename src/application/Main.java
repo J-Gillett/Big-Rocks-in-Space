@@ -10,7 +10,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCombination;
@@ -80,12 +79,12 @@ public class Main extends Application {
 			startButton.setPrefHeight(BUTTON_HEIGHT);
 			startButton.setLayoutX(REDUCED_WIDTH - BUTTON_WIDTH - BUTTON_MARGIN);
 			startButton.setLayoutY(REDUCED_HEIGHT - BUTTON_MARGIN - 4*BUTTON_HEIGHT - 3*BUTTON_GAP);
-			startButton.setOnAction(actionEvent ->  {
-			    stage.setScene(gameScene);
-			    stage.setWidth(screenWidth);
-			    stage.setHeight(screenHeight);
-			    stage.setFullScreen(true);
-			});
+//			startButton.setOnAction(actionEvent ->  {
+//			    stage.setScene(gameScene);
+//			    stage.setWidth(screenWidth);
+//			    stage.setHeight(screenHeight);
+//			    stage.setFullScreen(true);
+//			});
 			// High Scores Button
 			Button scoreButton = new Button("high scores");
 			scoreButton.setPrefWidth(BUTTON_WIDTH);
@@ -197,10 +196,18 @@ public class Main extends Application {
 			};
 			
 
+			startButton.setOnAction(actionEvent ->  {
+			    stage.setScene(gameScene);
+			    stage.setWidth(screenWidth);
+			    stage.setHeight(screenHeight);
+			    stage.setFullScreen(true);
+				gameloop.start();
+			});
+			
 			
 			////// START THE APPLICATION //////
 			stage.setScene(titleScene);
-			gameloop.start();
+//			gameloop.start();
 			stage.show();
 
 		} catch(Exception e) {
