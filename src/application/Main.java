@@ -153,10 +153,15 @@ public class Main extends Application {
 			
 			////// GAME SCENE //////
 			LinkedList<PhysicsObject> gameObjects = new LinkedList<>();
-			// TESTING OBJECT
-			Ship testObject = new Ship();
-			gameObjects.add(testObject);
-			gameRoot.getChildren().add(testObject);
+			// TESTING OBJECTS
+			for (int i=0; i<100; i++) {
+				Ship temp = new Ship();
+				gameObjects.add(temp);
+				gameRoot.getChildren().add(temp);
+			}
+//			Ship testObject = new Ship();
+//			gameObjects.add(testObject);
+//			gameRoot.getChildren().add(testObject);
 			gameScene.setCursor(Cursor.NONE);
 
 			
@@ -174,6 +179,8 @@ public class Main extends Application {
 						deltaTime = (nano - prevFrame)/Math.pow(10, 9); // delta time = current time-stamp - previous time-stamp / a billion seconds
 					}
 					prevFrame = nano; // set previous frame time-stamp to current
+					double FR = 1/deltaTime;
+					System.out.println(FR);
 					
 					////// UPDATES //////
 					for (int i=0; i < gameObjects.size(); i++) {

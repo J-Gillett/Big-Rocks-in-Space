@@ -8,9 +8,9 @@ public class Ship extends PhysicsObject {
 	
 	public Ship() {
 		super();
-		this.acceleration = new Vector2D(100.0,0.0);
+		this.acceleration = new Vector2D(10.0,0.0);
 		this.thrusters = true;
-		this.turningLeft = false;
+		this.turningLeft = true;
 		this.turningRight = false;
 	}
 	
