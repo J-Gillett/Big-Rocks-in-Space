@@ -30,13 +30,38 @@ public class BitsBox {
 		Polygon body = new Polygon();
 		body.getPoints().setAll(new Double[] {
 				-10.0, 10.0,
-				20.0, 0.0,
+				30.0, 0.0,
 				-10.0, -10.0
 		});
 		body.setFill(Color.WHITE);
 		body.setStroke(Color.YELLOW);
 		body.setStrokeWidth(2.0);
 		bits.add(body);
+
+		return bits;
+	}
+	
+	public static LinkedList<Shape> enemyShip() {
+		LinkedList<Shape> bits = new LinkedList<>();
+
+		Polygon outline = new Polygon();
+		outline.getPoints().setAll(new Double[] {
+				-4.0, -5.0,
+				-10.0, -10.0,
+				0.0, -14.0,
+				30.0, -7.0,
+				2.0, -7.0,
+				8.0, 0.0,
+				2.0, 7.0,
+				30.0, 7.0,
+				0.0, 14.0,
+				-10.0, 10.0,
+				-4.0, 5.0
+		});
+		outline.setFill(Color.WHITE);
+		outline.setStroke(Color.YELLOW);
+		outline.setStrokeWidth(2.0);
+		bits.add(outline);
 
 		return bits;
 	}

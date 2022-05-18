@@ -79,12 +79,8 @@ public class Main extends Application {
 			startButton.setPrefHeight(BUTTON_HEIGHT);
 			startButton.setLayoutX(REDUCED_WIDTH - BUTTON_WIDTH - BUTTON_MARGIN);
 			startButton.setLayoutY(REDUCED_HEIGHT - BUTTON_MARGIN - 4*BUTTON_HEIGHT - 3*BUTTON_GAP);
-//			startButton.setOnAction(actionEvent ->  {
-//			    stage.setScene(gameScene);
-//			    stage.setWidth(screenWidth);
-//			    stage.setHeight(screenHeight);
-//			    stage.setFullScreen(true);
-//			});
+			// Action set below game loop
+
 			// High Scores Button
 			Button scoreButton = new Button("high scores");
 			scoreButton.setPrefWidth(BUTTON_WIDTH);
@@ -153,15 +149,15 @@ public class Main extends Application {
 			
 			////// GAME SCENE //////
 			LinkedList<PhysicsObject> gameObjects = new LinkedList<>();
-			// TESTING OBJECTS
-			for (int i=0; i<100; i++) {
-				Ship temp = new Ship();
-				gameObjects.add(temp);
-				gameRoot.getChildren().add(temp);
-			}
-//			Ship testObject = new Ship();
-//			gameObjects.add(testObject);
-//			gameRoot.getChildren().add(testObject);
+			// LOADS OF OBJECTS (for performance)
+//			for (int i=0; i<100; i++) {
+//				Ship temp = new Ship();
+//				gameObjects.add(temp);
+//				gameRoot.getChildren().add(temp);
+//			}
+			Ship testObject = new Ship();
+			gameObjects.add(testObject);
+			gameRoot.getChildren().add(testObject);
 			gameScene.setCursor(Cursor.NONE);
 
 			
@@ -202,7 +198,9 @@ public class Main extends Application {
 				
 			};
 			
-
+			
+			////// START THE APPLICATION //////
+			stage.setScene(titleScene);
 			startButton.setOnAction(actionEvent ->  {
 			    stage.setScene(gameScene);
 			    stage.setWidth(screenWidth);
@@ -210,11 +208,6 @@ public class Main extends Application {
 			    stage.setFullScreen(true);
 				gameloop.start();
 			});
-			
-			
-			////// START THE APPLICATION //////
-			stage.setScene(titleScene);
-//			gameloop.start();
 			stage.show();
 
 		} catch(Exception e) {

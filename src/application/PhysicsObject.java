@@ -18,11 +18,14 @@ public class PhysicsObject extends Group implements Collider {
 		this.addParts();
 		this.setHitbox();
 		this.position = new Vector2D(Main.screenWidth/2,Main.screenHeight/2-50.0);
-		this.velocity = new Vector2D(100.0+Math.random()*200,0.0);
-		this.heading = Math.random()*360;
+		this.velocity = new Vector2D(0.0,0.0);
+		this.heading = 270;
 		this.velocity.setAngle(this.heading);
 		this.angularSpeed = 90.0;
 		this.proximityRadius = 0.0;
+		this.setTranslateX(this.position.getX()); // set translation based on position
+		this.setTranslateY(this.position.getY()); // set translation based on position
+		this.setRotate(this.heading); // set rotation based on heading
 	}
 	
 	protected void addParts() {

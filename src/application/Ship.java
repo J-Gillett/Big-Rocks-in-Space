@@ -5,14 +5,24 @@ public class Ship extends PhysicsObject {
 	private boolean turningLeft;
 	private boolean turningRight;
 	private Vector2D acceleration;
+	// TODO Add type (player, alien... spare?)
 	
 	public Ship() {
 		super();
-		this.acceleration = new Vector2D(10.0,0.0);
-		this.thrusters = true;
-		this.turningLeft = true;
+		this.acceleration = new Vector2D(0.0,0.0);
+		this.thrusters = false;
+		this.turningLeft = false;
 		this.turningRight = false;
 	}
+	
+	@Override
+	protected void addParts() {
+		this.parts = BitsBox.enemyShip();
+		for (int i=0; i<this.parts.size(); i++) {
+			this.getChildren().add(this.parts.get(i));
+		}
+	}
+
 	
 	@Override
 	protected void move(double deltaTime) {
