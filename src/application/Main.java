@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -12,7 +13,9 @@ import javafx.stage.StageStyle;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
 
@@ -158,6 +161,21 @@ public class Main extends Application {
 			Ship playerShip = new Ship();
 			gameObjects.add(playerShip);
 			gameRoot.getChildren().add(playerShip);
+			Controller control = new Controller();
+			gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+				@Override
+				public void handle(KeyEvent event) {
+					KeyCode pressedKey = event.getCode();
+					control.keyPressed(pressedKey, playerShip);
+				}
+			});
+			gameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+				@Override
+				public void handle(KeyEvent event) {
+					KeyCode releasedKey = event.getCode();
+					control.keyReleased(releasedKey, playerShip);
+				}
+			});
 			gameScene.setCursor(Cursor.NONE);
 
 			

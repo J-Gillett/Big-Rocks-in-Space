@@ -9,7 +9,8 @@ public class Ship extends PhysicsObject {
 	
 	public Ship() {
 		super();
-		this.acceleration = new Vector2D(100.0,0.0);
+		this.angularSpeed = 360.0;
+		this.acceleration = new Vector2D(200.0,0.0);
 		this.thrusters = false;
 		this.turningLeft = false;
 		this.turningRight = false;
@@ -41,4 +42,29 @@ public class Ship extends PhysicsObject {
 		}
 		this.position.add(deltaPos); // update position
 	}
+	
+	public void thrustersOn() {
+		this.thrusters = true;
+	}
+	
+	public void turnLeft() {
+		this.turningLeft = true;
+	}
+	
+	public void turnRight() {
+		this.turningRight = true;
+	}
+	
+	public void thrustersOff() {
+		this.thrusters = false;
+	}
+	
+	public void stopLeftTrun() {
+		this.turningLeft = false;
+	}
+	
+	public void stopRightTurn() {
+		this.turningRight = false;
+	}
+	
 }
