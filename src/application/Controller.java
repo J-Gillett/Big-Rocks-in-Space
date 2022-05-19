@@ -5,12 +5,15 @@ import javafx.scene.input.KeyCode;
 public class Controller {
 	public void keyPressed(KeyCode pressedKey, Ship player) {
 		switch(pressedKey) {
+		case W:
 		case UP:
 			player.thrustersOn();
 			break;
+		case A:
 		case LEFT:
 			player.turnLeft();
 			break;
+		case D:
 		case RIGHT:
 			player.turnRight();
 			break;
