@@ -24,6 +24,7 @@ public class Main extends Application {
 	public static Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 	public static int screenWidth = (int) screenBounds.getWidth();
 	public static int screenHeight = (int) screenBounds.getHeight();
+	private long prevFrame = 0;
 	
 	@Override
 	public void start(Stage stage) {
@@ -53,6 +54,7 @@ public class Main extends Application {
 			Scene titleScene = new Scene(titleRoot);
 			titleRoot.setId("title");
 			titleScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			stage.setScene(titleScene);
 
 			// High Score Scene
 			Pane scoreRoot = new Pane();
@@ -114,9 +116,8 @@ public class Main extends Application {
 			});
 			// adding children to titleRoot
 			titleRoot.getChildren().addAll(startButton, scoreButton, instructionsButton, exitButton);			
-			
 
-			
+
 			
 			////// HIGH SCORES SCENE //////
 			// Back Button
@@ -151,6 +152,7 @@ public class Main extends Application {
 			
 			
 			////// GAME SCENE //////
+			gameScene.setCursor(Cursor.NONE);
 			LinkedList<PhysicsObject> gameObjects = new LinkedList<>();
 			// LOADS OF OBJECTS (for performance)
 //			for (int i=0; i<100; i++) {
@@ -162,28 +164,10 @@ public class Main extends Application {
 			gameObjects.add(playerShip);
 			gameRoot.getChildren().add(playerShip);
 			Controller control = new Controller();
-			gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-				@Override
-				public void handle(KeyEvent event) {
-					KeyCode pressedKey = event.getCode();
-					control.keyPressed(pressedKey, playerShip);
-				}
-			});
-			gameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-				@Override
-				public void handle(KeyEvent event) {
-					KeyCode releasedKey = event.getCode();
-					control.keyReleased(releasedKey, playerShip);
-				}
-			});
-			gameScene.setCursor(Cursor.NONE);
 
-			
-			
-			////// GAME LOOP //////
+			// GAME LOOP //
 			AnimationTimer gameloop = new AnimationTimer()
 			{
-				private long prevFrame = 0;
 				private double deltaTime;
 
 				@Override
@@ -221,9 +205,6 @@ public class Main extends Application {
 				
 			};
 			
-			
-			////// START THE APPLICATION //////
-			stage.setScene(titleScene);
 			startButton.setOnAction(actionEvent ->  {
 			    stage.setScene(gameScene);
 			    stage.setWidth(screenWidth);
@@ -231,6 +212,35 @@ public class Main extends Application {
 			    stage.setFullScreen(true);
 				gameloop.start();
 			});
+
+			// GAME CONTROLS // 
+			gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+				@Override
+				public void handle(KeyEvent event) {
+					KeyCode pressedKey = event.getCode();
+					if (pressedKey == KeyCode.ESCAPE) {
+						gameloop.stop();
+						prevFrame = 0;
+					} else {
+						control.keyPressed(pressedKey, playerShip);						
+					}
+				}
+			});
+			gameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+				@Override
+				public void handle(KeyEvent event) {
+					KeyCode releasedKey = event.getCode();
+					if (releasedKey == KeyCode.ESCAPE) {
+						gameloop.start();
+					} else {
+						control.keyReleased(releasedKey, playerShip);						
+					}
+				}
+			});
+
+			
+			
+			////// BEGIN //////
 			stage.show();
 
 		} catch(Exception e) {
