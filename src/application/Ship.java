@@ -10,7 +10,7 @@ public class Ship extends PhysicsObject {
 	public Ship() {
 		super();
 		this.angularSpeed = 360.0;
-		this.acceleration = new Vector2D(200.0,0.0);
+		this.acceleration = new Vector2D(10.0,0.0);
 		this.thrusters = false;
 		this.turningLeft = false;
 		this.turningRight = false;
@@ -34,13 +34,11 @@ public class Ship extends PhysicsObject {
 			this.heading = this.heading + 1*this.angularSpeed*deltaTime;
 		}
 		this.heading = this.heading %360; // restrict heading from 0 to 360 degrees
-		this.acceleration = this.acceleration.setAngle(this.heading);
-		Vector2D deltaPos = Vector2D.copy(this.velocity).multiply(deltaTime); // displacement = initial velocity * time + ...
+		this.acceleration.setAngle(this.heading);
 		if (thrusters) {
-			this.velocity.add(this.acceleration.copy().multiply(deltaTime)); // final velocity is initial velocity + acceleration * time
-			deltaPos = deltaPos.add(this.acceleration.copy().multiply(deltaTime).multiply(0.5)); // displacement = ... + 0.5 acceleration * time
+			this.velocity.add(this.acceleration.copy().multiply(deltaTime));			
 		}
-		this.position.add(deltaPos); // update position
+		this.position.add(this.velocity);
 	}
 	
 	public void thrustersOn() {
