@@ -155,9 +155,9 @@ public class Main extends Application {
 //				gameObjects.add(temp);
 //				gameRoot.getChildren().add(temp);
 //			}
-			Ship testObject = new Ship();
-			gameObjects.add(testObject);
-			gameRoot.getChildren().add(testObject);
+			Ship playerShip = new Ship();
+			gameObjects.add(playerShip);
+			gameRoot.getChildren().add(playerShip);
 			gameScene.setCursor(Cursor.NONE);
 
 			
@@ -177,6 +177,11 @@ public class Main extends Application {
 					prevFrame = nano; // set previous frame time-stamp to current
 					double FR = 1/deltaTime;
 					System.out.println(FR);
+					
+					
+					////// ENEMY STEERING //////
+					// TODO Create enemy controller(s)
+					
 					
 					////// UPDATES //////
 					for (int i=0; i < gameObjects.size(); i++) {

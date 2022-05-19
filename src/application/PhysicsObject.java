@@ -23,9 +23,7 @@ public class PhysicsObject extends Group implements Collider {
 		this.velocity.setAngle(this.heading);
 		this.angularSpeed = 90.0;
 		this.proximityRadius = 0.0;
-		this.setTranslateX(this.position.getX()); // set translation based on position
-		this.setTranslateY(this.position.getY()); // set translation based on position
-		this.setRotate(this.heading); // set rotation based on heading
+		this.render();
 	}
 	
 	protected void addParts() {
