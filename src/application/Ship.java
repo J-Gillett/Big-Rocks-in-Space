@@ -17,7 +17,7 @@ public class Ship extends PhysicsObject {
 	
 	@Override
 	protected void addParts() {
-		this.parts = BitsBox.playerShip();
+		this.parts = BitsBox.arrow();
 		for (int i=0; i<this.parts.size(); i++) {
 			this.getChildren().add(this.parts.get(i));
 		}

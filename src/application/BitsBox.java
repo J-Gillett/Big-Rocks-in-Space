@@ -43,7 +43,7 @@ public class BitsBox {
 		return bits;
 	}
 	
-	public static LinkedList<Shape> enemyShip() {
+	public static LinkedList<Shape> swift() {
 		LinkedList<Shape> bits = new LinkedList<>();
 
 		Polygon outline = new Polygon();
@@ -68,7 +68,7 @@ public class BitsBox {
 	}
 
 	
-	public static LinkedList<Shape> playerShip() {
+	public static LinkedList<Shape> gemini() {
 		LinkedList<Shape> bits = new LinkedList<>();
 
 		Polygon body = new Polygon();
@@ -96,6 +96,28 @@ public class BitsBox {
 			bits.get(i).setStrokeType(StrokeType.INSIDE);
 		}
 
+		return bits;
+	}
+	
+	public static LinkedList<Shape> arrow() {
+		LinkedList<Shape> bits = new LinkedList<>();
+
+		Polygon outline = new Polygon();
+		outline.getPoints().setAll(new Double[] {
+				-6.0, -5.0,
+				-15.0, -7.0,
+				-2.0, -10.0,
+				5.0, -4.0,
+				25.0, 0.0,
+				5.0, 4.0,
+				-2.0, 10.0,
+				-15.0, 7.0,
+				-6.0, 5.0
+		});
+		outline.setFill(Color.WHITE);
+		outline.setStroke(Color.YELLOW);
+		outline.setStrokeType(StrokeType.INSIDE);
+		bits.add(outline);
 		return bits;
 	}
 
