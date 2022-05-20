@@ -204,20 +204,34 @@ public class Main extends Application {
 			AnimationTimer gameloop = new AnimationTimer()
 			{
 				private double deltaTime;
+				private double fpsPeriod = 0.5; // number of seconds between fps updates
+				private double fpsTimer = fpsPeriod;
+				private int frameCount = 0;
+				private int fpsMean;
 
 				@Override
 				public void handle(long nano) {
-					// Get time since last frame
+					// Get time since last frame & updating FPS counter
 					if (prevFrame != 0) {
 						deltaTime = (nano - prevFrame)/Math.pow(10, 9); // delta time = current time-stamp - previous time-stamp / a billion seconds
+
+						double FR = (1/deltaTime);
+						if (fpsTimer > 0) {
+							fpsMean += FR;
+							fpsTimer -= deltaTime;
+							frameCount++;
+						} else {
+							fpsMean += FR;
+							fpsMean /= frameCount;
+							fpsDisplay.setText(Integer.toString(fpsMean));
+							fpsTimer = fpsPeriod;
+							frameCount=0;
+						}
+					
 					}
 					prevFrame = nano; // set previous frame time-stamp to current
 					
-					// Frame Rate
-					int FR = (int) (1/deltaTime);
-					fpsDisplay.setText(Integer.toString(FR));
-					System.out.println(Integer.toString(FR));
-					
+										
 					
 					////// ENEMY STEERING //////
 					// TODO Create enemy controller(s)
