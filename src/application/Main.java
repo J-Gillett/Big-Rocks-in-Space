@@ -6,6 +6,7 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -18,6 +19,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -165,9 +167,27 @@ public class Main extends Application {
 			pauseBG.setFill(Color.BLACK);
 			pauseBG.setOpacity(0.8);
 			gameScene.setCursor(Cursor.NONE);
+			// Pause Text
 			Text pauseText = new Text("GAME PAUSED");
 			pauseText.setFill(Color.WHITE);
 			pauseText.setFont(new Font(80));
+			// Resume Button
+			Button resume = new Button("resume");
+			resume.setPrefWidth(BUTTON_WIDTH);
+			resume.setPrefHeight(BUTTON_HEIGHT);
+			// Quit Button
+			Button quit = new Button("quit");
+			quit.setPrefWidth(BUTTON_WIDTH);
+			quit.setPrefHeight(BUTTON_HEIGHT);
+			VBox pause = new VBox(pauseText,resume,quit);
+			pause.setSpacing(50);
+			pause.setAlignment(Pos.CENTER);
+			// FPS display
+			Text fpsDisplay = new Text(0,80,"0");
+			fpsDisplay.setFill(Color.WHITE);
+			fpsDisplay.setFont(new Font(80));
+			gameRoot.getChildren().add(fpsDisplay);
+			
 			LinkedList<PhysicsObject> gameObjects = new LinkedList<>();
 			// LOADS OF OBJECTS (for performance)
 //			for (int i=0; i<100; i++) {
@@ -194,8 +214,9 @@ public class Main extends Application {
 					prevFrame = nano; // set previous frame time-stamp to current
 					
 					// Frame Rate
-//					double FR = 1/deltaTime;
-//					System.out.println(FR);
+					int FR = (int) (1/deltaTime);
+					fpsDisplay.setText(Integer.toString(FR));
+					System.out.println(Integer.toString(FR));
 					
 					
 					////// ENEMY STEERING //////
@@ -241,8 +262,15 @@ public class Main extends Application {
 						gameloop.stop();
 						prevFrame = 0;
 						gameRoot.getChildren().add(pauseBG);
-						gameRoot.setCenter(pauseText);
+						gameRoot.setCenter(pause);
 						gameScene.setCursor(Cursor.DEFAULT);
+					} else if (pressedKey == KeyCode.ESCAPE && gamePaused == true) {
+						// UNPAUSE THE GAME
+						gamePaused = false;
+						gameScene.setCursor(Cursor.NONE);
+						gameRoot.getChildren().remove(pauseBG);
+						gameRoot.getChildren().remove(pause);
+						gameloop.start();
 					} else {
 						control.keyPressed(pressedKey, playerShip);						
 					}
@@ -252,17 +280,31 @@ public class Main extends Application {
 				@Override
 				public void handle(KeyEvent event) {
 					KeyCode releasedKey = event.getCode();
-					if (releasedKey == KeyCode.ESCAPE) {
-						// UNPAUSE THE GAME
-						gamePaused = false;
-						gameScene.setCursor(Cursor.NONE);
-						gameRoot.getChildren().remove(pauseBG);
-						gameRoot.getChildren().remove(pauseText);
-						gameloop.start();
-					} else {
-						control.keyReleased(releasedKey, playerShip);						
-					}
+					control.keyReleased(releasedKey, playerShip);
+					// change to FPS
+//					if (releasedKey == KeyCode.ESCAPE) {
+//						// UNPAUSE THE GAME
+//						gamePaused = false;
+//						gameScene.setCursor(Cursor.NONE);
+//						gameRoot.getChildren().remove(pauseBG);
+//						gameRoot.getChildren().remove(pause);
+//						gameloop.start();
+//					} else {
+//						control.keyReleased(releasedKey, playerShip);
+//					}
 				}
+			});
+			resume.setOnAction(actionEvent ->  {
+				// UNPAUSE THE GAME
+				gamePaused = false;
+				gameScene.setCursor(Cursor.NONE);
+				gameRoot.getChildren().remove(pauseBG);
+				gameRoot.getChildren().remove(pause);
+				gameloop.start();
+			});
+			quit.setOnAction(actionEvent ->  {
+				// TODO change to resetting the game and returning to title scene
+				Platform.exit();
 			});
 
 			
