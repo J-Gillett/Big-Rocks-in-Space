@@ -16,7 +16,12 @@ import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 
 public class Main extends Application {
@@ -25,6 +30,9 @@ public class Main extends Application {
 	public static int screenWidth = (int) screenBounds.getWidth();
 	public static int screenHeight = (int) screenBounds.getHeight();
 	private long prevFrame = 0;
+	private boolean displayFPS = false;
+	private boolean gamePaused = false;
+
 	
 	@Override
 	public void start(Stage stage) {
@@ -69,7 +77,7 @@ public class Main extends Application {
 			instructionScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
 			// Game Scene
-			Pane gameRoot = new Pane();
+			BorderPane gameRoot = new BorderPane();
 			Scene gameScene = new Scene(gameRoot);
 			gameRoot.setId("game");
 			gameScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -152,7 +160,14 @@ public class Main extends Application {
 			
 			
 			////// GAME SCENE //////
+			Rectangle pauseBG = new Rectangle(screenWidth,screenHeight);
+			// PAUSE OBJECTS
+			pauseBG.setFill(Color.BLACK);
+			pauseBG.setOpacity(0.8);
 			gameScene.setCursor(Cursor.NONE);
+			Text pauseText = new Text("GAME PAUSED");
+			pauseText.setFill(Color.WHITE);
+			pauseText.setFont(new Font(80));
 			LinkedList<PhysicsObject> gameObjects = new LinkedList<>();
 			// LOADS OF OBJECTS (for performance)
 //			for (int i=0; i<100; i++) {
@@ -177,8 +192,10 @@ public class Main extends Application {
 						deltaTime = (nano - prevFrame)/Math.pow(10, 9); // delta time = current time-stamp - previous time-stamp / a billion seconds
 					}
 					prevFrame = nano; // set previous frame time-stamp to current
-					double FR = 1/deltaTime;
-					System.out.println(FR);
+					
+					// Frame Rate
+//					double FR = 1/deltaTime;
+//					System.out.println(FR);
 					
 					
 					////// ENEMY STEERING //////
@@ -205,6 +222,7 @@ public class Main extends Application {
 				
 			};
 			
+			// ACTIONS //
 			startButton.setOnAction(actionEvent ->  {
 			    stage.setScene(gameScene);
 			    stage.setWidth(screenWidth);
@@ -213,14 +231,18 @@ public class Main extends Application {
 				gameloop.start();
 			});
 
-			// GAME CONTROLS // 
 			gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 				@Override
 				public void handle(KeyEvent event) {
 					KeyCode pressedKey = event.getCode();
-					if (pressedKey == KeyCode.ESCAPE) {
+					if (pressedKey == KeyCode.ESCAPE && gamePaused == false) {
+						// PAUSE THE GAME
+						gamePaused = true;
 						gameloop.stop();
 						prevFrame = 0;
+						gameRoot.getChildren().add(pauseBG);
+						gameRoot.setCenter(pauseText);
+						gameScene.setCursor(Cursor.DEFAULT);
 					} else {
 						control.keyPressed(pressedKey, playerShip);						
 					}
@@ -231,6 +253,11 @@ public class Main extends Application {
 				public void handle(KeyEvent event) {
 					KeyCode releasedKey = event.getCode();
 					if (releasedKey == KeyCode.ESCAPE) {
+						// UNPAUSE THE GAME
+						gamePaused = false;
+						gameScene.setCursor(Cursor.NONE);
+						gameRoot.getChildren().remove(pauseBG);
+						gameRoot.getChildren().remove(pauseText);
 						gameloop.start();
 					} else {
 						control.keyReleased(releasedKey, playerShip);						
