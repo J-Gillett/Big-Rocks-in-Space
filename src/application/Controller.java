@@ -24,12 +24,15 @@ public class Controller {
 	
 	public void keyReleased(KeyCode releasedKey, Ship player) {
 		switch(releasedKey) {
+		case W:
 		case UP:
 			player.thrustersOff();
 			break;
+		case A:
 		case LEFT:
 			player.stopLeftTrun();
 			break;
+		case D:
 		case RIGHT:
 			player.stopRightTurn();
 			break;
