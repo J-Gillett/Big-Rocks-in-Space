@@ -183,15 +183,17 @@ public class Main extends Application {
 			pause.setSpacing(50);
 			pause.setAlignment(Pos.CENTER);
 			// FPS display
-			Text fpsDisplay = new Text(0,80,"0");
+			Text fpsDisplay = new Text("0");
 			fpsDisplay.setFill(Color.WHITE);
+			fpsDisplay.setStroke(Color.BLACK);
 			fpsDisplay.setFont(new Font(80));
-			gameRoot.getChildren().add(fpsDisplay);
+//			gameRoot.getChildren().add(fpsDisplay);
+			BorderPane.setAlignment(fpsDisplay,Pos.BOTTOM_RIGHT);
 			
 			LinkedList<PhysicsObject> gameObjects = new LinkedList<>();
 			// LOADS OF OBJECTS (for performance)
-//			for (int i=0; i<100; i++) {
-//				Ship temp = new Ship();
+//			for (int i=0; i<1000; i++) {
+//				PhysicsObject temp = new PhysicsObject();
 //				gameObjects.add(temp);
 //				gameRoot.getChildren().add(temp);
 //			}
@@ -285,6 +287,12 @@ public class Main extends Application {
 						gameRoot.getChildren().remove(pauseBG);
 						gameRoot.getChildren().remove(pause);
 						gameloop.start();
+					} else if (pressedKey == KeyCode.F && displayFPS == false) {
+						displayFPS = true;
+						gameRoot.setBottom(fpsDisplay);
+					} else if (pressedKey == KeyCode.F && displayFPS == true) {
+						displayFPS = false;
+						gameRoot.getChildren().remove(fpsDisplay);
 					} else {
 						control.keyPressed(pressedKey, playerShip);						
 					}
@@ -295,17 +303,6 @@ public class Main extends Application {
 				public void handle(KeyEvent event) {
 					KeyCode releasedKey = event.getCode();
 					control.keyReleased(releasedKey, playerShip);
-					// change to FPS
-//					if (releasedKey == KeyCode.ESCAPE) {
-//						// UNPAUSE THE GAME
-//						gamePaused = false;
-//						gameScene.setCursor(Cursor.NONE);
-//						gameRoot.getChildren().remove(pauseBG);
-//						gameRoot.getChildren().remove(pause);
-//						gameloop.start();
-//					} else {
-//						control.keyReleased(releasedKey, playerShip);
-//					}
 				}
 			});
 			resume.setOnAction(actionEvent ->  {

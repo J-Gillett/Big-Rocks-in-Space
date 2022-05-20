@@ -10,6 +10,8 @@ public class Ship extends PhysicsObject {
 	public Ship() {
 		super();
 		this.angularSpeed = 360.0;
+		this.velocity = new Vector2D(0.0,0.0);
+		this.heading = 270.0;
 		this.acceleration = new Vector2D(10.0,0.0);
 		this.thrusters = false;
 		this.turningLeft = false;
