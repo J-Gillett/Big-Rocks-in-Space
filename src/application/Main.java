@@ -162,8 +162,8 @@ public class Main extends Application {
 			
 			
 			////// GAME SCENE //////
-			Rectangle pauseBG = new Rectangle(screenWidth,screenHeight);
 			// PAUSE OBJECTS
+			Rectangle pauseBG = new Rectangle(screenWidth,screenHeight);
 			pauseBG.setFill(Color.BLACK);
 			pauseBG.setOpacity(0.8);
 			gameScene.setCursor(Cursor.NONE);
@@ -187,7 +187,6 @@ public class Main extends Application {
 			fpsDisplay.setFill(Color.WHITE);
 			fpsDisplay.setStroke(Color.BLACK);
 			fpsDisplay.setFont(new Font(80));
-//			gameRoot.getChildren().add(fpsDisplay);
 			BorderPane.setAlignment(fpsDisplay,Pos.BOTTOM_RIGHT);
 			
 			LinkedList<PhysicsObject> gameObjects = new LinkedList<>();
