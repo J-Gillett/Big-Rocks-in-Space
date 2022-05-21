@@ -244,6 +244,9 @@ public class Main extends Application {
 					////// UPDATES //////
 					for (int i=0; i < gameObjects.size(); i++) {
 						gameObjects.get(i).update(deltaTime);
+						if (Math.random() < 0.0005 && gameObjects.get(i).getParent() != null) {
+							gameRoot.getChildren().remove(gameObjects.get(i));
+						}
 					}
 					
 					////// COLLISIONS //////
