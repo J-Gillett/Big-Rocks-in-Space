@@ -21,13 +21,13 @@ public class PhysicsObject extends Group implements Collider {
 		this.velocity = new Vector2D(100+Math.random()*200,0.0);
 		this.heading = Math.random()*360;
 		this.velocity.setAngle(this.heading);
-		this.angularSpeed = 90.0;
+		this.angularSpeed = (Math.random()-0.5)*180.0;
 		this.proximityRadius = 0.0;
 		this.render();
 	}
 	
 	protected void addParts() {
-		this.parts = BitsBox.testShape();
+		this.parts = BitsBox.bigRock();
 		for (int i=0; i<this.parts.size(); i++) {
 			this.getChildren().add(this.parts.get(i));
 		}

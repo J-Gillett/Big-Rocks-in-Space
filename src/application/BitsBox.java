@@ -120,5 +120,35 @@ public class BitsBox {
 		bits.add(outline);
 		return bits;
 	}
+	
+	public static LinkedList<Shape> bigRock() {
+		LinkedList<Shape> bits = new LinkedList<>();
+		Polygon outline = new Polygon();
+		outline.setFill(Color.WHITE);
+		outline.setStroke(Color.PURPLE);
+		outline.setStrokeType(StrokeType.INSIDE);
+		
+		int wedges = 20;
+		double wedgeAngle = 360/wedges;
+		double innerRadius = 27;
+		double maxRadiusIncrease = 13; // max ratio increase from inner radius to outer
+		
+		// using separate loops so radii length can be based on perlin noise in later update
+		double[] angles = new double[wedges];
+		double[] radii = new double[wedges];
+		for (int i = 0; i < wedges; i++) {
+			angles[i] =  wedgeAngle*i + Math.random()*wedgeAngle;
+			radii[i] = innerRadius + Math.random()*maxRadiusIncrease;
+		}
+		for (int i = 0; i < wedges; i++) {
+			Vector2D outlinePoint = Vector2D.newPolar(radii[i], angles[i]);
+			outline.getPoints().addAll(outlinePoint.getX(),outlinePoint.getY());
+		}
+		
+		
+		bits.add(outline);
+		return bits;
+	}
+
 
 }
