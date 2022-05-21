@@ -128,10 +128,10 @@ public class BitsBox {
 		outline.setStroke(Color.PURPLE);
 		outline.setStrokeType(StrokeType.INSIDE);
 		
-		int wedges = 20;
+		int wedges = 16;
 		double wedgeAngle = 360/wedges;
-		double innerRadius = 27;
-		double maxRadiusIncrease = 13; // max ratio increase from inner radius to outer
+		double innerRadius = 25;
+		double maxRadiusIncrease = 10; // max ratio increase from inner radius to outer
 		
 		// using separate loops so radii length can be based on perlin noise in later update
 		double[] angles = new double[wedges];

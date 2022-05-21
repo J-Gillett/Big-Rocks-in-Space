@@ -192,7 +192,7 @@ public class Main extends Application {
 			
 			LinkedList<PhysicsObject> gameObjects = new LinkedList<>();
 			// LOADS OF OBJECTS (for performance)
-			for (int i=0; i<100; i++) {
+			for (int i=0; i<20; i++) {
 				PhysicsObject temp = new PhysicsObject();
 				gameObjects.add(temp);
 				gameRoot.getChildren().add(temp);
