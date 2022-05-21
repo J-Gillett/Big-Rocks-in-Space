@@ -131,9 +131,9 @@ public class BitsBox {
 		int wedges = 16;
 		double wedgeAngle = 360/wedges;
 		double innerRadius = 25;
-		double maxRadiusIncrease = 10; // max ratio increase from inner radius to outer
+		double maxRadiusIncrease = 10; // max increase from inner radius to outer
 		
-		// using separate loops so radii length can be based on perlin noise in later update
+		// using arrays and two loops so radii length generation can be switched to perlin noise later
 		double[] angles = new double[wedges];
 		double[] radii = new double[wedges];
 		for (int i = 0; i < wedges; i++) {
