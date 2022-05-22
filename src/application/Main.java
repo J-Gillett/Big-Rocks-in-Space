@@ -311,22 +311,22 @@ public class Main extends Application {
 							gameloop.start();
 						}
 						break;
-//					case OPEN_BRACKET:
-//						if (debugPause == true) {
-//							for (int i=0; i < gameObjects.size(); i++) {
-//								gameObjects.get(i).update(-1/60);
-//								gameObjects.get(i).render();
-//							}
-//						}
-//						break;
-//					case CLOSE_BRACKET:
-//						if (debugPause == true) {
-//							for (int i=0; i < gameObjects.size(); i++) {
-//								gameObjects.get(i).update(1/60);
-//								gameObjects.get(i).render();
-//							}
-//						}
-//						break;
+					case OPEN_BRACKET:
+						if (debugPause == true) {
+							for (int i=0; i < gameObjects.size(); i++) {
+								gameObjects.get(i).update(-0.02);
+								gameObjects.get(i).render();
+							}
+						}
+						break;
+					case CLOSE_BRACKET:
+						if (debugPause == true) {
+							for (int i=0; i < gameObjects.size(); i++) {
+								gameObjects.get(i).update(0.02);
+								gameObjects.get(i).render();
+							}
+						}
+						break;
 					case MINUS:
 						timeWarpFactor *= 0.5;
 						break;
@@ -343,7 +343,6 @@ public class Main extends Application {
 						}
 						break;
 					default:
-						System.out.println(pressedKey);
 						control.keyPressed(pressedKey, playerShip);
 						break;
 					}
