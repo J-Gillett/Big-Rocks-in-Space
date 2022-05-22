@@ -233,6 +233,9 @@ public class Main extends Application {
 							fpsTimer = fpsPeriod;
 							frameCount=0;
 						}
+
+						deltaTime *= timeWarpFactor; // change the passage of time...
+
 					
 					}
 					prevFrame = nano; // set previous frame time-stamp to current
@@ -246,9 +249,9 @@ public class Main extends Application {
 					////// UPDATES //////
 					for (int i=0; i < gameObjects.size(); i++) {
 						gameObjects.get(i).update(deltaTime);
-						if (Math.random() < 0.0005 && gameObjects.get(i).getParent() != null) {
-							gameRoot.getChildren().remove(gameObjects.get(i));
-						}
+//						if (Math.random() < 0.0005 && gameObjects.get(i).getParent() != null) {
+//							gameRoot.getChildren().remove(gameObjects.get(i));
+//						}
 					}
 					
 					////// COLLISIONS //////
@@ -308,6 +311,28 @@ public class Main extends Application {
 							gameloop.start();
 						}
 						break;
+//					case OPEN_BRACKET:
+//						if (debugPause == true) {
+//							for (int i=0; i < gameObjects.size(); i++) {
+//								gameObjects.get(i).update(-1/60);
+//								gameObjects.get(i).render();
+//							}
+//						}
+//						break;
+//					case CLOSE_BRACKET:
+//						if (debugPause == true) {
+//							for (int i=0; i < gameObjects.size(); i++) {
+//								gameObjects.get(i).update(1/60);
+//								gameObjects.get(i).render();
+//							}
+//						}
+//						break;
+					case MINUS:
+						timeWarpFactor *= 0.5;
+						break;
+					case EQUALS:
+						timeWarpFactor *= 2;
+						break;
 					case F:
 						if (displayFPS == false) {
 							displayFPS = true;
@@ -318,6 +343,7 @@ public class Main extends Application {
 						}
 						break;
 					default:
+						System.out.println(pressedKey);
 						control.keyPressed(pressedKey, playerShip);
 						break;
 					}
