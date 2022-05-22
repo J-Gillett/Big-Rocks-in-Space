@@ -35,6 +35,8 @@ public class Main extends Application {
 	private long prevFrame = 0;
 	private boolean displayFPS = false;
 	private boolean gamePaused = false;
+	private boolean debugPause = false;
+	private double timeWarpFactor = 1.0;
 
 	
 	@Override
@@ -277,29 +279,47 @@ public class Main extends Application {
 				@Override
 				public void handle(KeyEvent event) {
 					KeyCode pressedKey = event.getCode();
-					if (pressedKey == KeyCode.ESCAPE && gamePaused == false) {
-						// PAUSE THE GAME
-						gamePaused = true;
-						gameloop.stop();
-						prevFrame = 0;
-						gameRoot.getChildren().add(pauseBG);
-						gameRoot.setCenter(pause);
-						gameScene.setCursor(Cursor.DEFAULT);
-					} else if (pressedKey == KeyCode.ESCAPE && gamePaused == true) {
-						// UNPAUSE THE GAME
-						gamePaused = false;
-						gameScene.setCursor(Cursor.NONE);
-						gameRoot.getChildren().remove(pauseBG);
-						gameRoot.getChildren().remove(pause);
-						gameloop.start();
-					} else if (pressedKey == KeyCode.F && displayFPS == false) {
-						displayFPS = true;
-						gameRoot.setBottom(fpsDisplay);
-					} else if (pressedKey == KeyCode.F && displayFPS == true) {
-						displayFPS = false;
-						gameRoot.getChildren().remove(fpsDisplay);
-					} else {
-						control.keyPressed(pressedKey, playerShip);						
+					switch (pressedKey) {
+					case ESCAPE:
+						if (gamePaused == false) {
+							gamePaused = true;
+							gameloop.stop();
+							prevFrame = 0;
+							gameRoot.getChildren().add(pauseBG);
+							gameRoot.setCenter(pause);
+							gameScene.setCursor(Cursor.DEFAULT);
+						} else {
+							gamePaused = false;
+							gameScene.setCursor(Cursor.NONE);
+							gameRoot.getChildren().remove(pauseBG);
+							gameRoot.getChildren().remove(pause);
+							gameloop.start();
+						}
+						break;
+					case P:
+						if (debugPause == false) {
+							debugPause = true;
+							gameloop.stop();
+							prevFrame = 0;
+							gameScene.setCursor(Cursor.DEFAULT);
+						} else {
+							debugPause = false;
+							gameScene.setCursor(Cursor.NONE);
+							gameloop.start();
+						}
+						break;
+					case F:
+						if (displayFPS == false) {
+							displayFPS = true;
+							gameRoot.setBottom(fpsDisplay);
+						} else {
+							displayFPS = false;
+							gameRoot.getChildren().remove(fpsDisplay);
+						}
+						break;
+					default:
+						control.keyPressed(pressedKey, playerShip);
+						break;
 					}
 				}
 			});
