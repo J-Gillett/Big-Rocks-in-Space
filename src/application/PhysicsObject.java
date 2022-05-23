@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import javafx.scene.Group;
 import javafx.scene.shape.Shape;
 
-public class PhysicsObject extends Group implements Collider {
+public class PhysicsObject extends Group {
 	protected LinkedList<Shape> parts;
 	protected Shape hitbox;
 	protected Vector2D position;
@@ -13,26 +13,7 @@ public class PhysicsObject extends Group implements Collider {
 	protected double heading;
 	protected double angularSpeed;
 	protected double proximityRadius;
-	
-	public PhysicsObject() {
-		this.addParts();
-		this.setHitbox();
-		this.position = new Vector2D(Main.screenWidth/2,Main.screenHeight/2-50.0);
-		this.velocity = new Vector2D(100+Math.random()*200,0.0);
-		this.heading = Math.random()*360;
-		this.velocity.setAngle(this.heading);
-		this.angularSpeed = (Math.random()-0.5)*180.0;
-		this.proximityRadius = 0.0;
-		this.render();
-	}
-	
-	protected void addParts() {
-		this.parts = BitsBox.bigRock();
-		for (int i=0; i<this.parts.size(); i++) {
-			this.getChildren().add(this.parts.get(i));
-		}
-	}
-	
+			
 	protected void setHitbox() {
 		// TODO loop through parts array setting the hitbox as a union of the parts
 	}

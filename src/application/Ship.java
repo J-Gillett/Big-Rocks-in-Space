@@ -8,7 +8,10 @@ public class Ship extends PhysicsObject {
 	// TODO Add type (player, alien... spare?)
 	
 	public Ship() {
-		super();
+		this.addParts();
+		this.setHitbox();
+		this.proximityRadius = 0.0;
+		this.position = new Vector2D(Main.screenWidth/2,Main.screenHeight/2-50.0);
 		this.angularSpeed = 360.0;
 		this.velocity = new Vector2D(0.0,0.0);
 		this.heading = 270.0;
@@ -18,8 +21,7 @@ public class Ship extends PhysicsObject {
 		this.turningRight = false;
 	}
 	
-	@Override
-	protected void addParts() {
+	private void addParts() {
 		this.parts = BitsBox.arrow();
 		for (int i=0; i<this.parts.size(); i++) {
 			this.getChildren().add(this.parts.get(i));
