@@ -1,7 +1,5 @@
 package application;
 	
-import java.util.LinkedList;
-
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -36,6 +34,8 @@ public class Main extends Application {
 	private boolean gamePaused = false;
 	private boolean debugPause = false;
 	private double timeWarpFactor = 1.0;
+	public Collection gameObjects = new Collection();
+	private Ship playerShip;
 
 	
 	@Override
@@ -190,19 +190,9 @@ public class Main extends Application {
 			fpsDisplay.setStroke(Color.BLACK);
 			fpsDisplay.setFont(new Font(80));
 			BorderPane.setAlignment(fpsDisplay,Pos.BOTTOM_RIGHT);
-			
-			LinkedList<PhysicsObject> gameObjects = new LinkedList<>();
-			// LOADS OF OBJECTS (for performance)
-			for (int i=0; i<1; i++) {
-				PhysicsObject temp = new Asteroid();
-				gameObjects.add(temp);
-				gameRoot.getChildren().add(temp);
-			}
 
-			// Player Ship
-			Ship playerShip = new Ship();
-			gameObjects.add(playerShip);
-			gameRoot.getChildren().add(playerShip);
+			gameRoot.getChildren().add(gameObjects);
+			
 			Controller control = new Controller();
 
 			// GAME LOOP //
@@ -274,6 +264,12 @@ public class Main extends Application {
 			    stage.setWidth(screenWidth);
 			    stage.setHeight(screenHeight);
 			    stage.setFullScreen(true);
+			    playerShip = new Ship();
+			    gameObjects.add(playerShip);
+			    int initialAsteroids = 3;
+				for (int i=0; i<initialAsteroids; i++) {
+					gameObjects.add(new Asteroid());
+				}
 				gameloop.start();
 			});
 
