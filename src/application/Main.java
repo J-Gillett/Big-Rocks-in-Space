@@ -1,8 +1,12 @@
 package application;
 	
+import java.util.LinkedList;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -10,8 +14,16 @@ import javafx.stage.StageStyle;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 
 public class Main extends Application {
@@ -19,6 +31,12 @@ public class Main extends Application {
 	public static Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 	public static int screenWidth = (int) screenBounds.getWidth();
 	public static int screenHeight = (int) screenBounds.getHeight();
+	private long prevFrame = 0;
+	private boolean displayFPS = false;
+	private boolean gamePaused = false;
+	private boolean debugPause = false;
+	private double timeWarpFactor = 1.0;
+
 	
 	@Override
 	public void start(Stage stage) {
@@ -48,6 +66,7 @@ public class Main extends Application {
 			Scene titleScene = new Scene(titleRoot);
 			titleRoot.setId("title");
 			titleScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			stage.setScene(titleScene);
 
 			// High Score Scene
 			Pane scoreRoot = new Pane();
@@ -62,7 +81,7 @@ public class Main extends Application {
 			instructionScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
 			// Game Scene
-			Pane gameRoot = new Pane();
+			BorderPane gameRoot = new BorderPane();
 			Scene gameScene = new Scene(gameRoot);
 			gameRoot.setId("game");
 			gameScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -77,12 +96,8 @@ public class Main extends Application {
 			startButton.setPrefHeight(BUTTON_HEIGHT);
 			startButton.setLayoutX(REDUCED_WIDTH - BUTTON_WIDTH - BUTTON_MARGIN);
 			startButton.setLayoutY(REDUCED_HEIGHT - BUTTON_MARGIN - 4*BUTTON_HEIGHT - 3*BUTTON_GAP);
-			startButton.setOnAction(actionEvent ->  {
-			    stage.setScene(gameScene);
-			    stage.setWidth(screenWidth);
-			    stage.setHeight(screenHeight);
-			    stage.setFullScreen(true);
-			});
+			// Action set below game loop
+
 			// High Scores Button
 			Button scoreButton = new Button("high scores");
 			scoreButton.setPrefWidth(BUTTON_WIDTH);
@@ -113,9 +128,8 @@ public class Main extends Application {
 			});
 			// adding children to titleRoot
 			titleRoot.getChildren().addAll(startButton, scoreButton, instructionsButton, exitButton);			
-			
 
-			
+
 			
 			////// HIGH SCORES SCENE //////
 			// Back Button
@@ -149,39 +163,104 @@ public class Main extends Application {
 
 			
 			
-			////// GAME SCENE //////			
-			// TESTING OBJECT
-//			MovingPolygon testObject = new MovingPolygon();
-			Ship testObject = new Ship();
-			gameRoot.getChildren().add(testObject);
+			////// GAME SCENE //////
+			// PAUSE OBJECTS
+			Rectangle pauseBG = new Rectangle(screenWidth,screenHeight);
+			pauseBG.setFill(Color.BLACK);
+			pauseBG.setOpacity(0.8);
 			gameScene.setCursor(Cursor.NONE);
+			// Pause Text
+			Text pauseText = new Text("GAME PAUSED");
+			pauseText.setFill(Color.WHITE);
+			pauseText.setFont(new Font(80));
+			// Resume Button
+			Button resume = new Button("resume");
+			resume.setPrefWidth(BUTTON_WIDTH);
+			resume.setPrefHeight(BUTTON_HEIGHT);
+			// Quit Button
+			Button quit = new Button("quit");
+			quit.setPrefWidth(BUTTON_WIDTH);
+			quit.setPrefHeight(BUTTON_HEIGHT);
+			VBox pause = new VBox(pauseText,resume,quit);
+			pause.setSpacing(50);
+			pause.setAlignment(Pos.CENTER);
+			// FPS display
+			Text fpsDisplay = new Text("0");
+			fpsDisplay.setFill(Color.WHITE);
+			fpsDisplay.setStroke(Color.BLACK);
+			fpsDisplay.setFont(new Font(80));
+			BorderPane.setAlignment(fpsDisplay,Pos.BOTTOM_RIGHT);
+			
+			LinkedList<PhysicsObject> gameObjects = new LinkedList<>();
+			// LOADS OF OBJECTS (for performance)
+			for (int i=0; i<1; i++) {
+				PhysicsObject temp = new Asteroid();
+				gameObjects.add(temp);
+				gameRoot.getChildren().add(temp);
+			}
 
-			
-			
-			////// GAME LOOP //////
+			// Player Ship
+			Ship playerShip = new Ship();
+			gameObjects.add(playerShip);
+			gameRoot.getChildren().add(playerShip);
+			Controller control = new Controller();
+
+			// GAME LOOP //
 			AnimationTimer gameloop = new AnimationTimer()
 			{
-				private long prevFrame = 0;
 				private double deltaTime;
+				private double fpsPeriod = 0.5; // number of seconds between fps updates
+				private double fpsTimer = fpsPeriod;
+				private int frameCount = 0;
+				private int fpsMean;
 
 				@Override
 				public void handle(long nano) {
-					// Get time since last frame
+					// Get time since last frame & updating FPS counter
 					if (prevFrame != 0) {
 						deltaTime = (nano - prevFrame)/Math.pow(10, 9); // delta time = current time-stamp - previous time-stamp / a billion seconds
+
+						double FR = (1/deltaTime);
+						if (fpsTimer > 0) {
+							fpsMean += FR;
+							fpsTimer -= deltaTime;
+							frameCount++;
+						} else {
+							fpsMean += FR;
+							fpsMean /= frameCount;
+							fpsDisplay.setText(Integer.toString(fpsMean));
+							fpsTimer = fpsPeriod;
+							frameCount=0;
+						}
+
+						deltaTime *= timeWarpFactor; // change the passage of time...
+
+					
 					}
 					prevFrame = nano; // set previous frame time-stamp to current
 					
+										
+					
+					////// ENEMY STEERING //////
+					// TODO Create enemy controller(s)
+					
+					
 					////// UPDATES //////
-					// FOR TESTING ONLY
-					testObject.update(deltaTime);
+					for (int i=0; i < gameObjects.size(); i++) {
+						gameObjects.get(i).update(deltaTime);
+//						if (Math.random() < 0.0005 && gameObjects.get(i).getParent() != null) {
+//							gameRoot.getChildren().remove(gameObjects.get(i));
+//						}
+					}
 					
 					////// COLLISIONS //////
 					// TODO Add Collisions
 					
 					////// RENDERING //////
-					testObject.render();
-					
+					for (int i=0; i < gameObjects.size(); i++) {
+						gameObjects.get(i).render();
+					}
+
 					////// GAME STATE ///////
 					// TODO Check end of level
 					// TODO Check if game over
@@ -189,11 +268,108 @@ public class Main extends Application {
 				
 			};
 			
+			// ACTIONS //
+			startButton.setOnAction(actionEvent ->  {
+			    stage.setScene(gameScene);
+			    stage.setWidth(screenWidth);
+			    stage.setHeight(screenHeight);
+			    stage.setFullScreen(true);
+				gameloop.start();
+			});
+
+			gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+				@Override
+				public void handle(KeyEvent event) {
+					KeyCode pressedKey = event.getCode();
+					switch (pressedKey) {
+					case ESCAPE:
+						if (gamePaused == false) {
+							gamePaused = true;
+							gameloop.stop();
+							prevFrame = 0;
+							gameRoot.getChildren().add(pauseBG);
+							gameRoot.setCenter(pause);
+							gameScene.setCursor(Cursor.DEFAULT);
+						} else {
+							gamePaused = false;
+							gameScene.setCursor(Cursor.NONE);
+							gameRoot.getChildren().remove(pauseBG);
+							gameRoot.getChildren().remove(pause);
+							gameloop.start();
+						}
+						break;
+					case P:
+						if (debugPause == false) {
+							debugPause = true;
+							gameloop.stop();
+							prevFrame = 0;
+							gameScene.setCursor(Cursor.DEFAULT);
+						} else {
+							debugPause = false;
+							gameScene.setCursor(Cursor.NONE);
+							gameloop.start();
+						}
+						break;
+					case OPEN_BRACKET:
+						if (debugPause == true) {
+							for (int i=0; i < gameObjects.size(); i++) {
+								gameObjects.get(i).update(-0.02);
+								gameObjects.get(i).render();
+							}
+						}
+						break;
+					case CLOSE_BRACKET:
+						if (debugPause == true) {
+							for (int i=0; i < gameObjects.size(); i++) {
+								gameObjects.get(i).update(0.02);
+								gameObjects.get(i).render();
+							}
+						}
+						break;
+					case MINUS:
+						timeWarpFactor *= 0.5;
+						break;
+					case EQUALS:
+						timeWarpFactor *= 2;
+						break;
+					case F:
+						if (displayFPS == false) {
+							displayFPS = true;
+							gameRoot.setBottom(fpsDisplay);
+						} else {
+							displayFPS = false;
+							gameRoot.getChildren().remove(fpsDisplay);
+						}
+						break;
+					default:
+						control.keyPressed(pressedKey, playerShip);
+						break;
+					}
+				}
+			});
+			gameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+				@Override
+				public void handle(KeyEvent event) {
+					KeyCode releasedKey = event.getCode();
+					control.keyReleased(releasedKey, playerShip);
+				}
+			});
+			resume.setOnAction(actionEvent ->  {
+				// UNPAUSE THE GAME
+				gamePaused = false;
+				gameScene.setCursor(Cursor.NONE);
+				gameRoot.getChildren().remove(pauseBG);
+				gameRoot.getChildren().remove(pause);
+				gameloop.start();
+			});
+			quit.setOnAction(actionEvent ->  {
+				// TODO change to resetting the game and returning to title scene
+				Platform.exit();
+			});
 
 			
-			////// START THE APPLICATION //////
-			stage.setScene(titleScene);
-			gameloop.start();
+			
+			////// BEGIN //////
 			stage.show();
 
 		} catch(Exception e) {
