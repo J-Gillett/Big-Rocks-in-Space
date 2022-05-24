@@ -8,13 +8,24 @@ public class Collection extends Group {
 	public LinkedList<PhysicsObject> objects = new LinkedList<>();
 	
 	public void add(PhysicsObject object) {
-		objects.add(object);
+		this.objects.add(object);
 		this.getChildren().add(object);
 	}
 	
+	public void add(Collection collection) {
+		for (int i=0; i<collection.size(); i++) {
+			this.add(collection.get(i));
+		}
+	}
+	
 	public void remove(PhysicsObject object) {
-		objects.remove(object);
+		this.objects.remove(object);
 		this.getChildren().remove(object);
+	}
+	
+	public void remove(int i) {
+		this.objects.remove(i);
+		this.getChildren().remove(i);
 	}
 	
 	public PhysicsObject get(int i) {
