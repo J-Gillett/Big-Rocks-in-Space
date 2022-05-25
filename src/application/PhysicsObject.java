@@ -21,8 +21,8 @@ public class PhysicsObject extends Group {
 		for (int i=0; i<this.parts.size(); i++) {
 			this.hitbox = Shape.union(this.hitbox, this.parts.get(i));
 		}
-		this.hitbox.setFill(Color.RED);
-		this.hitbox.setStroke(Color.RED);
+		this.hitbox.setFill(Color.TRANSPARENT);
+		this.hitbox.setStroke(Color.TRANSPARENT);
 		this.getChildren().add(this.hitbox);
 	}
 	
