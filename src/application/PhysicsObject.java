@@ -35,6 +35,11 @@ public class PhysicsObject extends Group {
 		return intersection.getBoundsInLocal().getWidth() != -1;
 	}
 	
+	public void collisionResponse(PhysicsObject other) {
+		this.hitbox.setFill(Color.RED);
+		this.hitbox.setStroke(Color.RED);
+	}
+	
 	public void update(double deltaTime) {
 		this.move(deltaTime);
 		this.screenWrap();

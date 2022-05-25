@@ -252,10 +252,8 @@ public class Main extends Application {
 								continue;
 							}
 							if (gameObjects.get(i).hasCollided(gameObjects.get(j))) {
-								gameObjects.get(i).hitbox.setFill(Color.RED);
-								gameObjects.get(j).hitbox.setFill(Color.RED);
-								gameObjects.get(i).hitbox.setStroke(Color.RED);
-								gameObjects.get(j).hitbox.setStroke(Color.RED);
+								gameObjects.get(i).collisionResponse(gameObjects.get(j));
+								gameObjects.get(j).collisionResponse(gameObjects.get(i));
 							}
 						}
 					}
