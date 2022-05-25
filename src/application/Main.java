@@ -238,6 +238,8 @@ public class Main extends Application {
 					////// UPDATES //////
 					for (int i=0; i < gameObjects.size(); i++) {
 						gameObjects.get(i).update(deltaTime);
+						gameObjects.get(i).hitbox.setFill(Color.TRANSPARENT);
+						gameObjects.get(i).hitbox.setStroke(Color.TRANSPARENT);
 					}
 					
 					////// COLLISIONS //////
@@ -250,7 +252,10 @@ public class Main extends Application {
 								continue;
 							}
 							if (gameObjects.get(i).hasCollided(gameObjects.get(j))) {
-								System.out.println("BOOM!");
+								gameObjects.get(i).hitbox.setFill(Color.RED);
+								gameObjects.get(j).hitbox.setFill(Color.RED);
+								gameObjects.get(i).hitbox.setStroke(Color.RED);
+								gameObjects.get(j).hitbox.setStroke(Color.RED);
 							}
 						}
 					}
@@ -275,7 +280,7 @@ public class Main extends Application {
 			    stage.setFullScreen(true);
 			    playerShip = new Ship();
 			    gameObjects.add(playerShip);
-			    int initialAsteroids = 3;
+			    int initialAsteroids = 1;
 				for (int i=0; i<initialAsteroids; i++) {
 					gameObjects.add(new Asteroid());
 				}
