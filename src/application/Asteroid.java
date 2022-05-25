@@ -1,5 +1,7 @@
 package application;
 
+import javafx.scene.paint.Color;
+
 public class Asteroid extends PhysicsObject {
 	public Asteroid() {
 		this.addParts();
@@ -20,6 +22,7 @@ public class Asteroid extends PhysicsObject {
 	}
 	
 	private Vector2D randomPosition() {
+		// F'NG HELL - creates a giant cross of no-go zones.
 		double minSpawnDistance = 200.0;
 		double randomX = (Math.random()-0.5)*2;
 		double rangeX = Main.screenWidth/2-minSpawnDistance;
@@ -28,6 +31,13 @@ public class Asteroid extends PhysicsObject {
 		double x = (Main.screenWidth/2)+randomX*(rangeX+minSpawnDistance/Math.abs(randomX));
 		double y = (Main.screenHeight/2)+randomY*(rangeY+minSpawnDistance/Math.abs(randomY));
 		return new Vector2D(x,y);
+	}
+	
+	@Override
+	public void collisionResponse(PhysicsObject other) {
+		this.hitbox.setFill(Color.RED);
+		this.hitbox.setStroke(Color.RED);
+		Main.gameObjects.remove(this); // THROW IT IN THE BIN! AT END OF FRAME, EMPTY THE BIN!
 	}
 
 }

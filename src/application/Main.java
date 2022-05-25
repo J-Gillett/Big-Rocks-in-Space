@@ -34,7 +34,7 @@ public class Main extends Application {
 	private boolean gamePaused = false;
 	private boolean debugPause = false;
 	private double timeWarpFactor = 1.0;
-	public Collection gameObjects = new Collection();
+	public static Collection gameObjects = new Collection();
 	private Ship playerShip;
 
 	
@@ -278,7 +278,7 @@ public class Main extends Application {
 			    stage.setFullScreen(true);
 			    playerShip = new Ship();
 			    gameObjects.add(playerShip);
-			    int initialAsteroids = 1;
+			    int initialAsteroids = 3;
 				for (int i=0; i<initialAsteroids; i++) {
 					gameObjects.add(new Asteroid());
 				}

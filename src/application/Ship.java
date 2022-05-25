@@ -1,5 +1,7 @@
 package application;
 
+import javafx.scene.paint.Color;
+
 public class Ship extends PhysicsObject {
 	private boolean thrusters;
 	private boolean turningLeft;
@@ -43,6 +45,13 @@ public class Ship extends PhysicsObject {
 			this.velocity.add(this.acceleration.copy().multiply(deltaTime));			
 		}
 		this.position.add(this.velocity.copy().multiply(deltaTime));
+	}
+	
+	@Override
+	public void collisionResponse(PhysicsObject other) {
+		this.hitbox.setFill(Color.RED);
+		this.hitbox.setStroke(Color.RED);
+		Main.gameObjects.remove(this); // THROW IT IN THE BIN! AT END OF FRAME, EMPTY THE BIN!
 	}
 	
 	public void thrustersOn() {
