@@ -3,6 +3,9 @@ package application;
 import java.util.LinkedList;
 
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
 public class PhysicsObject extends Group {
@@ -12,10 +15,24 @@ public class PhysicsObject extends Group {
 	protected Vector2D velocity;
 	protected double heading;
 	protected double angularSpeed;
-	protected double proximityRadius;
 			
 	protected void setHitbox() {
-		// TODO loop through parts array setting the hitbox as a union of the parts
+		this.hitbox = Shape.union(new Circle(), new Circle());
+		for (int i=0; i<this.parts.size(); i++) {
+			this.hitbox = Shape.union(this.hitbox, this.parts.get(i));
+		}
+		this.hitbox.setFill(Color.TRANSPARENT);
+		this.hitbox.setStroke(Color.TRANSPARENT);
+		this.getChildren().add(this.hitbox);
+	}
+	
+	public boolean isProximal(Node other) {
+		return this.getBoundsInParent().intersects(other.getBoundsInParent());
+	}
+	
+	public boolean hasCollided(PhysicsObject other) {
+		Shape intersection = Shape.intersect(this.hitbox, other.hitbox);
+		return intersection.getBoundsInLocal().getWidth() != -1;
 	}
 	
 	public void update(double deltaTime) {
