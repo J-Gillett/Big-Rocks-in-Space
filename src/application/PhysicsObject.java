@@ -3,6 +3,8 @@ package application;
 import java.util.LinkedList;
 
 import javafx.scene.Group;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
 public class PhysicsObject extends Group {
@@ -15,7 +17,13 @@ public class PhysicsObject extends Group {
 	protected double proximityRadius;
 			
 	protected void setHitbox() {
-		// TODO loop through parts array setting the hitbox as a union of the parts
+		this.hitbox = Shape.union(new Circle(), new Circle());
+		for (int i=0; i<this.parts.size(); i++) {
+			this.hitbox = Shape.union(this.hitbox, this.parts.get(i));
+		}
+		this.hitbox.setFill(Color.RED);
+		this.hitbox.setStroke(Color.RED);
+		this.getChildren().add(this.hitbox);
 	}
 	
 	public void update(double deltaTime) {
