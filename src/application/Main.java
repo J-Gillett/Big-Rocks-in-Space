@@ -238,13 +238,22 @@ public class Main extends Application {
 					////// UPDATES //////
 					for (int i=0; i < gameObjects.size(); i++) {
 						gameObjects.get(i).update(deltaTime);
-//						if (Math.random() < 0.0005 && gameObjects.get(i).getParent() != null) {
-//							gameRoot.getChildren().remove(gameObjects.get(i));
-//						}
 					}
 					
 					////// COLLISIONS //////
-					// TODO Add Collisions
+					for (int i=gameObjects.size()-1; i>=0; i--) {
+						for (int j=gameObjects.size()-1; j>=0; j--) {
+							if (gameObjects.get(i) == gameObjects.get(j)) {
+								continue;
+							}
+							if (!gameObjects.get(i).isProximal(gameObjects.get(j))) {
+								continue;
+							}
+							if (gameObjects.get(i).hasCollided(gameObjects.get(j))) {
+								System.out.println("BOOM!");
+							}
+						}
+					}
 					
 					////// RENDERING //////
 					for (int i=0; i < gameObjects.size(); i++) {

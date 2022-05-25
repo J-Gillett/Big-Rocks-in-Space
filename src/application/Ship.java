@@ -10,7 +10,6 @@ public class Ship extends PhysicsObject {
 	public Ship() {
 		this.addParts();
 		this.setHitbox();
-		this.proximityRadius = 0.0;
 		this.position = new Vector2D(Main.screenWidth/2,Main.screenHeight/2-50.0);
 		this.angularSpeed = 360.0;
 		this.velocity = new Vector2D(0.0,0.0);
@@ -19,6 +18,7 @@ public class Ship extends PhysicsObject {
 		this.thrusters = false;
 		this.turningLeft = false;
 		this.turningRight = false;
+		this.render();
 	}
 	
 	private void addParts() {

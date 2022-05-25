@@ -12,36 +12,6 @@ import javafx.scene.shape.StrokeType;
 /* This Class is purely to hide away the outlines so they don't clutter up the main classes */
 
 public class BitsBox {
-
-	public static LinkedList<Shape> testShape() {
-		LinkedList<Shape> bits = new LinkedList<>();
-
-		Polygon gun = new Polygon();
-		gun.getPoints().setAll(new Double[] {
-				0.0, 1.0,
-				10.0, 1.0,
-				10.0, -1.0,
-				0.0, -1.0
-		});
-		gun.setTranslateX(2.0);
-		gun.setTranslateY(-5.0);
-		gun.setFill(Color.WHITE);
-		gun.setStroke(Color.YELLOW);
-		gun.setStrokeWidth(2.0);
-		bits.add(gun);
-
-		Polygon body = new Polygon();
-		body.getPoints().setAll(new Double[] {
-				-10.0, 10.0,
-				30.0, 0.0,
-				-10.0, -10.0
-		});
-		body.setFill(Color.WHITE);
-		body.setStroke(Color.YELLOW);
-		bits.add(body);
-
-		return bits;
-	}
 	
 	public static LinkedList<Shape> swift() {
 		LinkedList<Shape> bits = new LinkedList<>();
@@ -130,8 +100,8 @@ public class BitsBox {
 		
 		int wedges = 16;
 		double wedgeAngle = 360/wedges;
-		double innerRadius = 25;
-		double maxRadiusIncrease = 10; // max increase from inner radius to outer
+		double innerRadius = 32;
+		double maxRadiusIncrease = 16; // max increase from inner radius to outer
 		
 		// using arrays and two loops so radii length generation can be switched to perlin noise later
 		double[] angles = new double[wedges];
