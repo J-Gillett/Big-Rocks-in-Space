@@ -280,7 +280,7 @@ public class Main extends Application {
 			    stage.setFullScreen(true);
 			    playerShip = new Ship();
 			    gameObjects.add(playerShip);
-			    int initialAsteroids = 1;
+			    int initialAsteroids = 3;
 				for (int i=0; i<initialAsteroids; i++) {
 					gameObjects.add(new Asteroid());
 				}
