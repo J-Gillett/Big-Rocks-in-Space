@@ -15,6 +15,7 @@ public class Ship extends PhysicsObject {
 		this.velocity = new Vector2D(0.0,0.0);
 		this.heading = 270.0;
 		this.acceleration = new Vector2D(300.0,0.0);
+		this.collisions = true;
 		this.thrusters = false;
 		this.turningLeft = false;
 		this.turningRight = false;

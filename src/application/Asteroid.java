@@ -9,6 +9,7 @@ public class Asteroid extends PhysicsObject {
 		this.heading = Math.random()*360;
 		this.velocity.setAngle(this.heading);
 		this.angularSpeed = (Math.random()-0.5)*180.0;
+		this.collisions = true;
 		this.render();
 	}
 	
