@@ -1,5 +1,7 @@
 package application;
 	
+import java.util.LinkedList;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -243,6 +245,40 @@ public class Main extends Application {
 					}
 					
 					////// COLLISIONS //////
+					/* The QuadTree Class and collision handling "works" but does not appear to offer any performance improvement.
+					 * The Code has been left in the  */
+//					QuadTree collisionTree = new QuadTree(0,0,screenWidth,screenHeight);
+//					for (int i=0; i<gameObjects.size(); i++) {
+//						if (gameObjects.get(i).collisions) {
+//							collisionTree.insert(gameObjects.get(i));
+//						}
+//					}
+//					
+//					for (int i=0; i<gameObjects.size(); i++) {
+//						if (!gameObjects.get(i).collisions) {
+//							continue;
+//						} else {
+//							Vector2D location = gameObjects.get(i).position;
+//							double queryRadius = 100.0;
+//							LinkedList<PhysicsObject> objectsToCheck = collisionTree.query(location, queryRadius);
+//							for (int j=0; j<objectsToCheck.size(); j++) {
+//								if (gameObjects.get(i) == objectsToCheck.get(j)) {
+//									continue;
+//								}
+//								if (!gameObjects.get(i).isProximal(objectsToCheck.get(j))) {
+//									continue;
+//								}
+//								if (gameObjects.get(i).hasCollided(objectsToCheck.get(j))) {
+//									gameObjects.get(i).hitbox.setFill(Color.RED);
+//									objectsToCheck.get(j).hitbox.setFill(Color.RED);
+//									gameObjects.get(i).hitbox.setStroke(Color.RED);
+//									objectsToCheck.get(j).hitbox.setStroke(Color.RED);
+//								}
+//							}
+//						}
+//					}
+					
+					// If implementing the QuadTree code above, comment out the code below
 					for (int i=gameObjects.size()-1; i>=0; i--) {
 						for (int j=gameObjects.size()-1; j>=0; j--) {
 							if (gameObjects.get(i) == gameObjects.get(j)) {
@@ -280,7 +316,7 @@ public class Main extends Application {
 			    stage.setFullScreen(true);
 			    playerShip = new Ship();
 			    gameObjects.add(playerShip);
-			    int initialAsteroids = 3;
+			    int initialAsteroids = 10;
 				for (int i=0; i<initialAsteroids; i++) {
 					gameObjects.add(new Asteroid());
 				}

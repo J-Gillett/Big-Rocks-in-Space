@@ -15,6 +15,7 @@ public class PhysicsObject extends Group {
 	protected Vector2D velocity;
 	protected double heading;
 	protected double angularSpeed;
+	public boolean collisions;
 			
 	protected void setHitbox() {
 		this.hitbox = Shape.union(new Circle(), new Circle());
